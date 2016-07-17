@@ -10,7 +10,7 @@ import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 
 
-var app = express();
+let app = express();
 
 app.use(logger("dev" as any));
 app.use(bodyParser.json());
@@ -22,7 +22,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "html");
 
 app.use((req: Request, res: Response, next: Function) => {
-    var err: any = new Error("Not Found");
+    const err: any = new Error("Not Found");
     err.status = 404;
     next(err);
 });
