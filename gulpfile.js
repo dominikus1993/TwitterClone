@@ -2,35 +2,42 @@
 const gulp = require("gulp");
 const babel = require("gulp-babel");
 const watch = require("gulp-watch");
-const tsb = require('gulp-tsb');
+const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
 const jasmine = require("gulp-jasmine");
 const reporters = require('jasmine-reporters');
+const sourcemap = require("gulp-sourcemaps");
+const tslint = require("gulp-tslint");
 
-
-const tsFiles = ["src/**/*.ts", "typings/**/*.ts", "test/**/*.ts"];
+const tsFiles = ["src/**/*.ts", "test/**/*.ts"];
 const jsFiles = ["src/**/*.js", "!node_modules/**/*.js", "test/**/*.js"];
-const compilation = tsb.create({
-    target: 'es6',
-    module: 'commonjs',
-    declaration: false,
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "removeComments": false,
-    "preserveConstEnums": false
-});
+const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
+
+var tsProject = typescript.createProject("tsconfig.json");
+
+
+function lint(){
+    return gulp.src(filesToLint)
+        .pipe(tslint({
+            formatter: "json"
+        }))
+        .pipe(tslint.report({emitError: false}));
+}
 
 function build() {
-    return gulp.src(tsFiles).pipe(compilation()).pipe(gulp.dest(function (file) {
-        return file.base;
-    })).pipe(notify({
-        title: 'DONE COMPILATION TYPESCRIPT',
-        message: 'Compile file  <%= file.relative %>',
-        onLast: true,
-        notifier: function(args){}
-    }));
+    return gulp.src(tsFiles)
+        .pipe(sourcemap.init())
+        .pipe(typescript(tsProject))
+        .pipe(sourcemap.write())
+        .pipe(gulp.dest(function (file) { return file.base; }))
+        .pipe(notify({
+            title: 'DONE COMPILATION TYPESCRIPT',
+            message: 'Compile file  <%= file.relative %>',
+            onLast: true,
+            notifier: function(args){}
+        }));
 }
 
 function buildJs() {
@@ -50,23 +57,32 @@ gulp.task("build", function() {
     return build();
 });
 
+gulp.task("lint", function () {
+    return lint();
+});
+
 gulp.task("compile", ["build"], function () {
     return buildJs();
 });
 
-
-gulp.task("test", ["compile"], function () {
+gulp.task("test", ["compile", "lint"], function () {
     return gulp.src("test/**/*.js").pipe(jasmine({
         reporter: new reporters.NUnitXmlReporter()
     }));
 });
 
-gulp.task("nodemon", ['watch'], function(cb){
+gulp.task("watch", function () {
+    gulp.watch(tsFiles, ["compile"]);
+});
+
+gulp.task("nodemon", ['compile'], function(cb){
     var started = false;
 
-    return nodemon({
+    nodemon({
         script: 'src/bin/www',
-        watch: jsFiles
+        tasks : ["compile"],
+        watch : tsFiles,
+        ext : "ts"
     }).on('start', function () {
         if (!started) {
             cb();
@@ -81,10 +97,6 @@ gulp.task("nodemon", ['watch'], function(cb){
     });
 });
 
-
-gulp.task("watch", function () {
-    gulp.watch(tsFiles, ["compile"]);
-});
 
 gulp.task('sync', ['nodemon'], function () {
     browserSync.init(null, {
