@@ -2,16 +2,14 @@ import Koa = require("koa");
 
 const app = new Koa();
 
-app.use(function *(ctx, next) {
-    const start = new Date().getTime();
+app.use(function *(next) {
     yield next;
-    const ms = new Date().getTime() - start;
-    console.log(`${this.method} ${this.url} - ${ms}`);
 });
 
+app.use(function *(ctx, next) {
+    this.body = "Hello world";
+})
 
-app.use(function () {
-   this.body = "Hello world";
-});
+app.listen(3000);
 
 module.exports = app;

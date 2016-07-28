@@ -1,6 +1,5 @@
 "use strict";
 const gulp = require("gulp");
-const babel = require("gulp-babel");
 const watch = require("gulp-watch");
 const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
@@ -40,29 +39,12 @@ function build() {
         }));
 }
 
-function buildJs() {
-    return gulp.src(jsFiles).pipe(babel({
-        presets: ['es2015']
-    })).pipe(gulp.dest(function(file){
-        return file.base;
-    })).pipe(notify({
-        title: 'DONE COMPILATION JAVASCRIPT',
-        message: 'Compile file  <%= file.relative %>',
-        onLast: true,
-        notifier: function(args){}
-    }));
-}
-
-gulp.task("build", function() {
+gulp.task("compile", function() {
     return build();
 });
 
 gulp.task("lint", function () {
     return lint();
-});
-
-gulp.task("compile", ["build"], function () {
-    return buildJs();
 });
 
 gulp.task("test", ["compile", "lint"], function () {
@@ -79,7 +61,7 @@ gulp.task("nodemon", ['compile'], function(cb){
     var started = false;
 
     nodemon({
-        script: 'src/bin/www',
+        script: './src/app.js',
         tasks : ["compile"],
         watch : tsFiles,
         ext : "ts"
