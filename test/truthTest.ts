@@ -1,6 +1,7 @@
-///<reference path="../typings/index.d.ts"/>
+import {expect} from "chai";
+
 describe("test truth", () => {
     it("true is equal to true", () => {
-        expect(true).toBeTruthy();
+        expect(true).to.be.true;
     });
 });

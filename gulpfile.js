@@ -5,12 +5,12 @@ const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
-const jasmine = require("gulp-jasmine");
+const mocha = require("gulp-mocha");
 const reporters = require('jasmine-reporters');
 const sourcemap = require("gulp-sourcemaps");
 const tslint = require("gulp-tslint");
 
-const tsFiles = ["src/**/*.ts", "test/**/*.ts"];
+const tsFiles = ["src/**/*.ts", "test/**/*.ts", "typings/**/**.ts"];
 const jsFiles = ["src/**/*.js", "!node_modules/**/*.js", "test/**/*.js"];
 const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
 
@@ -48,8 +48,8 @@ gulp.task("lint", () => {
 });
 
 gulp.task("test", ["compile", "lint"], () => {
-    return gulp.src("test/**/*.js").pipe(jasmine({
-        reporter: new reporters.NUnitXmlReporter()
+    return gulp.src("test/**/*.js").pipe(mocha({
+        reporter: "nyan"
     }));
 });
 

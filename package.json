@@ -20,12 +20,12 @@
     "mocha": "^3.0.2",
     "mongodb": "^2.2.1",
     "mongoose": "^4.5.0",
-    "mpromise": "^0.5.5",
     "q": "^1.4.1"
   },
   "devDependencies": {
     "browser-sync": "^2.11.2",
     "gulp": "^3.9.0",
+    "gulp-mocha": "^3.0.1",
     "gulp-nodemon": "^2.0.6",
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",

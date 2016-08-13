@@ -10,7 +10,7 @@
     "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
     "mongoose": "registry:dt/mongoose#4.5.4+20160807120805",
-    "mpromise": "registry:dt/mpromise#0.5.4+20160316155526",
+    "mongoose-promise": "registry:dt/mongoose-promise#4.5.4+20160720003345",
     "node": "registry:dt/node#6.0.0+20160720070758",
     "ramda": "registry:global/ramda#0.21.0+20160531162943"
   }
