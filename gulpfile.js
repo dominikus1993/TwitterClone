@@ -6,7 +6,6 @@ const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
 const mocha = require("gulp-mocha");
-const reporters = require('jasmine-reporters');
 const sourcemap = require("gulp-sourcemaps");
 const tslint = require("gulp-tslint");
 
