@@ -1,18 +1,17 @@
 {
   "name": "twitter-clone",
-  "dependencies": {
-    "mongoose": "registry:npm/mongoose#4.3.5+20160628072220",
-    "ramda": "registry:npm/ramda#0.21.0+20160531162943"
-  },
   "globalDependencies": {
     "bluebird": "registry:dt/bluebird#2.0.0+20160701023356",
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
     "cookies": "registry:dt/cookies#0.5.1+20160316171810",
     "crypto-js": "registry:dt/crypto-js#3.1.4+20160708041433",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
     "koa": "registry:dt/koa#2.0.0+20160724024233",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
+    "mongoose": "registry:dt/mongoose#4.5.4+20160807120805",
     "mpromise": "registry:dt/mpromise#0.5.4+20160316155526",
-    "node": "registry:dt/node#6.0.0+20160720070758"
+    "node": "registry:dt/node#6.0.0+20160720070758",
+    "ramda": "registry:global/ramda#0.21.0+20160531162943"
   }
 }

@@ -35,29 +35,29 @@ function build() {
             title: 'DONE COMPILATION TYPESCRIPT',
             message: 'Compile file  <%= file.relative %>',
             onLast: true,
-            notifier: function(args){}
+            notifier: (args) => {}
         }));
 }
 
-gulp.task("compile", function() {
+gulp.task("compile", () => {
     return build();
 });
 
-gulp.task("lint", function () {
+gulp.task("lint", () => {
     return lint();
 });
 
-gulp.task("test", ["compile", "lint"], function () {
+gulp.task("test", ["compile", "lint"], () => {
     return gulp.src("test/**/*.js").pipe(jasmine({
         reporter: new reporters.NUnitXmlReporter()
     }));
 });
 
-gulp.task("watch", function () {
+gulp.task("watch", () => {
     gulp.watch(tsFiles, ["compile"]);
 });
 
-gulp.task("nodemon", ['compile'], function(cb){
+gulp.task("nodemon", ['compile'], () => {
     var started = false;
 
     nodemon({
@@ -80,7 +80,7 @@ gulp.task("nodemon", ['compile'], function(cb){
 });
 
 
-gulp.task('sync', ['nodemon'], function () {
+gulp.task('sync', ['nodemon'], () => {
     browserSync.init(null, {
         proxy: "http://localhost:3000",
         files: ["src/public/**/*.*", "src/views/**/*.*"],
