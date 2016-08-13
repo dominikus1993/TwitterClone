@@ -7,7 +7,7 @@ app.use(function *(ctx) {
 });
 
 app.use(function *(ctx, next) {
-    this.body = "Hello world";
+    this.body = {a: "dupa"};
 })
 
 app.listen(3000);
