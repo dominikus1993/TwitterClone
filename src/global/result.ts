@@ -6,5 +6,5 @@ export interface Result<TResult, TError> {
 }
 
 export function wrapResult<T>(value: T): Result<T, {}> {
-    return null;
+    return null;//{isSuccess: (value != undefined), isError: (value == undefined)};
 }
