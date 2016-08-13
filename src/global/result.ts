@@ -4,3 +4,7 @@ export interface Result<TResult, TError> {
     value: TResult;
     message: TError;
 }
+
+export function wrapResult<T>(value: T): Result<T, {}> {
+    return null;
+}
