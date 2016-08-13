@@ -2,8 +2,8 @@ import Koa = require("koa");
 
 const app = new Koa();
 
-app.use(function *(next) {
-    yield next;
+app.use(function *(ctx) {
+    yield ctx;
 });
 
 app.use(function *(ctx, next) {
