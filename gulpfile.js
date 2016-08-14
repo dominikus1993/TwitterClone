@@ -16,12 +16,12 @@ const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
 var tsProject = typescript.createProject("tsconfig.json");
 
 
-function lint(){
+function lint() {
     return gulp.src(filesToLint)
         .pipe(tslint({
             formatter: "json"
         }))
-        .pipe(tslint.report({emitError: false}));
+        .pipe(tslint.report({ emitError: false }));
 }
 
 function build() {
@@ -34,7 +34,7 @@ function build() {
             title: 'DONE COMPILATION TYPESCRIPT',
             message: 'Compile file  <%= file.relative %>',
             onLast: true,
-            notifier: (args) => {}
+            notifier: (args) => { }
         }));
 }
 
@@ -47,9 +47,10 @@ gulp.task("lint", () => {
 });
 
 gulp.task("test", ["compile", "lint"], () => {
-    return gulp.src("test/**/*.js").pipe(mocha({
-        reporter: "nyan"
-    }));
+    return gulp.src("test/**/*.js")
+        .pipe(mocha({
+            reporter: "nyan"
+        }));
 });
 
 gulp.task("watch", () => {
@@ -61,9 +62,9 @@ gulp.task("nodemon", ['compile'], () => {
 
     nodemon({
         script: './src/app.js',
-        tasks : ["compile"],
-        watch : tsFiles,
-        ext : "ts"
+        tasks: ["compile"],
+        watch: tsFiles,
+        ext: "ts"
     }).on('start', function () {
         if (!started) {
             cb();
