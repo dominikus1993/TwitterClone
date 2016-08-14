@@ -1,3 +1,5 @@
+Twitter clone written in [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-v18.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+
 |    CI    |      Status   |
 |----------|:-------------:|
 | Travis(Linux): |  [![Build Status](https://travis-ci.org/dominikus1993/twitterClone.svg?branch=master)](https://travis-ci.org/dominikus1993/twitterClone) |
