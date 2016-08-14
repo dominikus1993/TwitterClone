@@ -19,14 +19,13 @@ app.use((req: Request, res: Response, next: Function) => {
 });
 
 if (app.get("env") === "development") {
-    // noinspection TypeScriptValidateTypes
-    app.use(function(err: any, req: Request, res: Response, next: Function) {
+    app.use((err: any, req: Request, res: Response, next: Function) => {
         res.status(err.status || 500);
         res.json(wrapResult(null, err));
     });
 }
 
-app.use(function(err: any, req: Request, res: Response, next: Function) {
+app.use((err: any, req: Request, res: Response, next: Function) => {
     res.status(err.status || 500);
     res.json(wrapResult(null, err));
 });
