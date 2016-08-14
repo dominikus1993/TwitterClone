@@ -12,6 +12,7 @@
     "mongoose": "registry:dt/mongoose#4.5.4+20160807120805",
     "mongoose-promise": "registry:dt/mongoose-promise#4.5.4+20160720003345",
     "node": "registry:dt/node#6.0.0+20160720070758",
+    "passport": "registry:dt/passport#0.2.0+20160720063208",
     "ramda": "registry:global/ramda#0.21.0+20160531162943"
   }
 }
