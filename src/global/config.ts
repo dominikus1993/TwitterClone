@@ -1,5 +1,5 @@
 export const databaseConfig = {
-    url: "mongodb://localhost/twitter"
+    url: process.env.MONGO_URL || "mongodb://localhost/twitter"
 }
 
 
