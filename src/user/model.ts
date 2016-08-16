@@ -16,4 +16,6 @@ export const UserSchema = new Schema({
     email: {index: {unique: true}, required: false, type: String},
 });
 
+UserSchema.plugin(passportLocalMongoose);
+
 export const UserModel = model<User>("User", UserSchema);
