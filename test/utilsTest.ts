@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {curr, isNullOrUndefined} from "../src/global/utils";
+import {encrypt, curr, isNullOrUndefined} from "../src/global/utils";
 describe("utils test", () => {
     describe("isnullorundefined test", () => {
 
@@ -37,6 +37,14 @@ describe("utils test", () => {
                 it("result should equal 3", () => {
                     expect(result).to.eq(3);
                 });
+            });
+        });
+    });
+    describe("encrypt test", () => {
+        describe("admin phrase encrypt test", () => {
+            const result = encrypt("123456789", "admin")
+            it("result should equal 21232f297a57a5a743894a0e4a801fc3", () => {
+                expect(result).to.eq("21232f297a57a5a743894a0e4a801fc3");
             });
         });
     });
