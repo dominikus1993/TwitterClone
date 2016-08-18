@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {isNullOrUndefined} from "../src/global/utils";
+import {curr, isNullOrUndefined} from "../src/global/utils";
 describe("utils test", () => {
     describe("isnullorundefined test", () => {
 
@@ -24,6 +24,19 @@ describe("utils test", () => {
 
             it("result should be true", () => {
                 expect(result).to.be.true;
+            });
+        });
+    });
+
+    describe("currying test", () => {
+        describe("simple adder function test", () => {
+            const adder = (a: number, b: number) => a + b;
+            const currAdder = curr(adder);
+            describe("add 1 and 2 test", () => {
+                const result = currAdder(1)(2);
+                it("result should equal 3", () => {
+                    expect(result).to.eq(3);
+                });
             });
         });
     });
