@@ -1,3 +1,5 @@
+import {encrypt} from "../global/utils";
+import {appConfig} from "../global/config";
 import {User} from "./model";
 import {Model} from "mongoose";
 
@@ -11,9 +13,10 @@ export class UserRepository implements IUserRepository {
     }
 
     public register(data: {email: string, username: string, password: string}){
-        // return new this.userModel({
-        //     email: data.email,
-        //     password:
-        // });
+        return new this.userModel({
+            email: data.email,
+            username: data.username,
+            password: encrypt(appConfig.secret, data.password),
+        });
     }
 }

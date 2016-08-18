@@ -1,44 +1,45 @@
 {
-    "name": "twitter-clone",
-    "version": "0.0.1",
-    "description": "",
-    "main": "src/app.js",
-    "scripts": {
-        "start": "node ./src/bin/www",
-        "test": "gulp test"
-    },
-    "author": "Dominik Kotecki",
-    "license": "MIT",
-    "dependencies": {
-        "array-union": "^1.0.2",
-        "bluebird": "^3.4.1",
-        "body-parser": "1.15.2",
-        "chai": "^3.5.0",
-        "cookie-parser": "~1.4.3",
-        "crypto-js": "^3.1.6",
-        "debug": "2.2.0",
-        "express": "~4.14.0",
-        "immutable": "^3.8.1",
-        "mocha": "^3.0.2",
-        "mongodb": "^2.2.6",
-        "mongoose": "^4.5.9",
-        "morgan": "^1.7.0",
-        "q": "^1.4.1"
-    },
-    "devDependencies": {
-        "browser-sync": "^2.14.0",
-        "gulp": "^3.9.1",
-        "gulp-mocha": "^3.0.1",
-        "gulp-nodemon": "^2.1.0",
-        "gulp-notify": "^2.2.0",
-        "gulp-rename": "^1.2.2",
-        "gulp-sourcemaps": "^1.6.0",
-        "gulp-tslint": "^6.0.1",
-        "gulp-typescript": "^2.13.6",
-        "gulp-watch": "^4.3.9",
-        "karma": "1.2.0",
-        "nodemon": "1.10.0",
-        "tern-node-express": "^0.4.0",
-        "tslint": "^3.14.0"
-    }
+  "name": "twitter-clone",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node ./src/bin/www",
+    "test": "gulp test"
+  },
+  "author": "Dominik Kotecki",
+  "license": "MIT",
+  "dependencies": {
+    "array-union": "^1.0.2",
+    "bluebird": "^3.4.1",
+    "body-parser": "1.15.2",
+    "chai": "^3.5.0",
+    "cookie-parser": "~1.4.3",
+    "crypto-js": "^3.1.6",
+    "debug": "2.2.0",
+    "express": "~4.14.0",
+    "immutable": "^3.8.1",
+    "mocha": "^3.0.2",
+    "moment": "^2.14.1",
+    "mongodb": "^2.2.6",
+    "mongoose": "^4.5.9",
+    "morgan": "^1.7.0",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^6.0.1",
+    "gulp-typescript": "^2.13.6",
+    "gulp-watch": "^4.3.9",
+    "karma": "1.2.0",
+    "nodemon": "1.10.0",
+    "tern-node-express": "^0.4.0",
+    "tslint": "^3.14.0"
+  }
 }
