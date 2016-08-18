@@ -1,11 +1,14 @@
 import {wrapResult} from "./global/result";
-import {errorConfig} from "./global/config";
+import {databaseConfig, errorConfig} from "./global/config";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import {Request, Response} from "express";
 import * as express from "express";
 import * as logger from "morgan";
+import * as mongoose from "mongoose";
 
+mongoose.Promise = databaseConfig.promise;
+mongoose.connect(databaseConfig.url);
 Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 
 const app = express();

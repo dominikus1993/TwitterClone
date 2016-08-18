@@ -1,5 +1,8 @@
+import * as Promise from "bluebird";
+
 export const databaseConfig = {
-    url: process.env.MONGO_URL || "mongodb://localhost/twitter"
+    url: process.env.MONGO_URL || "mongodb://localhost/twitter",
+    promise: Promise,
 }
 
 export const appConfig = {
