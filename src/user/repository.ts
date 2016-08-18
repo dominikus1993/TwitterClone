@@ -11,6 +11,9 @@ export class UserRepository implements IUserRepository {
     }
 
     public register(data: {email: string, username: string, password: string}){
-        
+        // return new this.userModel({
+        //     email: data.email,
+        //     password:
+        // });
     }
 }
