@@ -20,6 +20,9 @@ describe("user repository test", () => {
     describe("register user", () => {
         it("should save user without error", (done) => {
             repository.register({ email: "admin@admin.admin", username: "admin", password: "admin" }).then((fulfilled) => {
+                expect(fulfilled).to.be.not.null;
+                expect(fulfilled.email).to.eq("admin@admin.admin");
+                expect(fulfilled.username).to.eq("admin");
                 done()
             }, (rejected?: any) => {
                 done(rejected);
