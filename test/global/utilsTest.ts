@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {encrypt, curr, isNullOrUndefined} from "../src/global/utils";
+import {encrypt, curr, isNullOrUndefined} from "../../src/global/utils";
 describe("utils test", () => {
     describe("isnullorundefined test", () => {
 

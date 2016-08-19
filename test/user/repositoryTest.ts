@@ -1,8 +1,8 @@
 import {expect} from "chai";
-import {isNullOrUndefined} from "../src/global/utils";
-import {databaseConfig} from '../src/global/config';
-import {IUserRepository, UserRepository} from "../src/user/repository";
-import {UserModel} from "../src/user/model";
+import {isNullOrUndefined} from "../../src/global/utils";
+import {databaseConfig} from '../../src/global/config';
+import {IUserRepository, UserRepository} from "../../src/user/repository";
+import {UserModel} from "../../src/user/model";
 import * as mongoose from "mongoose";
 import { Document, Schema, model } from "mongoose";
 

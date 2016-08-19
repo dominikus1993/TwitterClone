@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {wrapResult, Result} from "../src/global/result";
+import {wrapResult, Result} from "../../src/global/result";
 
 describe("wrap result", () => {
 
