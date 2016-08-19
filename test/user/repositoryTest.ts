@@ -23,7 +23,31 @@ describe("user repository test", () => {
                 expect(fulfilled).to.be.not.null;
                 expect(fulfilled.email).to.eq("admin@admin.admin");
                 expect(fulfilled.username).to.eq("admin");
-                done()
+                done();
+            }, (rejected?: any) => {
+                done(rejected);
+            });
+        });
+    });
+
+    describe("login user with correct username and password", () => {
+        it("should find one user", (done) => {
+            repository.login({username: "admin", password: "admin" }).then((fulfilled) => {
+                expect(fulfilled).to.be.not.null;
+                expect(fulfilled.email).to.eq("admin@admin.admin");
+                expect(fulfilled.username).to.eq("admin");
+                done();
+            }, (rejected?: any) => {
+                done(rejected);
+            });
+        });
+    });
+
+        describe("login user with incorrect username and password", () => {
+        it("should find one user", (done) => {
+            repository.login({username: "admina", password: "admina" }).then((fulfilled) => {
+                expect(fulfilled).to.be.null;
+                done();
             }, (rejected?: any) => {
                 done(rejected);
             });
