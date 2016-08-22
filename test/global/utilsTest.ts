@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {encrypt, curr, isNullOrUndefined} from "../../src/global/utils";
+import {encrypt, curr, generateToken, isNullOrUndefined} from "../../src/global/utils";
 describe("utils test", () => {
     describe("isnullorundefined test", () => {
 
@@ -40,6 +40,7 @@ describe("utils test", () => {
             });
         });
     });
+
     describe("encrypt test", () => {
         describe("admin phrase encrypt test", () => {
             const result = encrypt("123456789", "admin")
@@ -47,5 +48,13 @@ describe("utils test", () => {
                 expect(result).to.eq("21232f297a57a5a743894a0e4a801fc3");
             });
         });
+    });
+
+    describe("generate Token", () => {
+            const result = generateToken();
+            it("result should be not null", () => {
+                expect(result).to.be.not.null;
+                expect(result).to.be.string;
+            });
     });
 });
