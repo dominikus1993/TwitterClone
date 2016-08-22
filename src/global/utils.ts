@@ -15,7 +15,7 @@ export function encrypt(secret: string, text: string): string {
     return crypto.MD5(text, secret).toString();
 }
 
-export function generateToken(){
-    const rand = () => Math.random().toString(36).substring(2);
+export function generateToken(): string {
+    const rand: () => string = () => Math.random().toString(36).substring(2);
     return rand() + rand();
 }
