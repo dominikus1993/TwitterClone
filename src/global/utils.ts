@@ -1,4 +1,5 @@
 import * as crypto from "crypto-js";
+
 export function isNullOrUndefined(value: any): boolean {
     return value === null || value === undefined;
 }
