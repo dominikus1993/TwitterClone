@@ -1,72 +1,70 @@
 "use strict";
 const gulp = require("gulp");
-const babel = require("gulp-babel");
 const watch = require("gulp-watch");
-const tsb = require('gulp-tsb');
+const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
-const jasmine = require("gulp-jasmine");
-const reporters = require('jasmine-reporters');
+const mocha = require("gulp-mocha");
+const sourcemap = require("gulp-sourcemaps");
+const tslint = require("gulp-tslint");
 
-
-const tsFiles = ["src/**/*.ts", "typings/**/*.ts", "test/**/*.ts"];
+const tsFiles = ["src/**/*.ts", "test/**/*.ts", "typings/**/**.ts"];
 const jsFiles = ["src/**/*.js", "!node_modules/**/*.js", "test/**/*.js"];
-const compilation = tsb.create({
-    target: 'es6',
-    module: 'commonjs',
-    declaration: false,
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "removeComments": false,
-    "preserveConstEnums": false
-});
+const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
+
+var tsProject = typescript.createProject("tsconfig.json");
+
+
+function lint() {
+    return gulp.src(filesToLint)
+        .pipe(tslint({
+            formatter: "json"
+        }))
+        .pipe(tslint.report({ emitError: false }));
+}
 
 function build() {
-    return gulp.src(tsFiles).pipe(compilation()).pipe(gulp.dest(function (file) {
-        return file.base;
-    })).pipe(notify({
-        title: 'DONE COMPILATION TYPESCRIPT',
-        message: 'Compile file  <%= file.relative %>',
-        onLast: true,
-        notifier: function(args){}
-    }));
+    return gulp.src(tsFiles)
+        .pipe(sourcemap.init())
+        .pipe(typescript(tsProject))
+        .pipe(sourcemap.write())
+        .pipe(gulp.dest(function (file) { return file.base; }))
+        .pipe(notify({
+            title: 'DONE COMPILATION TYPESCRIPT',
+            message: 'Compile file  <%= file.relative %>',
+            onLast: true,
+            notifier: (args) => { }
+        }));
 }
 
-function buildJs() {
-    return gulp.src(jsFiles).pipe(babel({
-        presets: ['es2015']
-    })).pipe(gulp.dest(function(file){
-        return file.base;
-    })).pipe(notify({
-        title: 'DONE COMPILATION JAVASCRIPT',
-        message: 'Compile file  <%= file.relative %>',
-        onLast: true,
-        notifier: function(args){}
-    }));
-}
-
-gulp.task("build", function() {
+gulp.task("compile", () => {
     return build();
 });
 
-gulp.task("compile", ["build"], function () {
-    return buildJs();
+gulp.task("lint", () => {
+    return lint();
 });
 
-
-gulp.task("test", ["compile"], function () {
-    return gulp.src("test/**/*.js").pipe(jasmine({
-        reporter: new reporters.NUnitXmlReporter()
-    }));
+gulp.task("test", ["compile", "lint"], () => {
+    return gulp.src("test/**/*.js")
+        .pipe(mocha({
+            reporter: "nyan"
+        }));
 });
 
-gulp.task("nodemon", ['watch'], function(cb){
+gulp.task("watch", () => {
+    gulp.watch(tsFiles, ["compile"]);
+});
+
+gulp.task("nodemon", ['compile'], () => {
     var started = false;
 
-    return nodemon({
-        script: 'src/bin/www',
-        watch: jsFiles
+    nodemon({
+        script: './src/app.js',
+        tasks: ["compile"],
+        watch: tsFiles,
+        ext: "ts"
     }).on('start', function () {
         if (!started) {
             cb();
@@ -82,11 +80,7 @@ gulp.task("nodemon", ['watch'], function(cb){
 });
 
 
-gulp.task("watch", function () {
-    gulp.watch(tsFiles, ["compile"]);
-});
-
-gulp.task('sync', ['nodemon'], function () {
+gulp.task('sync', ['nodemon'], () => {
     browserSync.init(null, {
         proxy: "http://localhost:3000",
         files: ["src/public/**/*.*", "src/views/**/*.*"],

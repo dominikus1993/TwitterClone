@@ -1,52 +1,39 @@
-/**
- * Created by domin on 17.07.2016.
- */
-/// <reference path="../typings/index.d.ts" />
+import {wrapResult} from "./global/result";
+import {databaseConfig, errorConfig} from "./global/config";
+import * as bodyParser from "body-parser";
+import * as cookieParser from "cookie-parser";
 import {Request, Response} from "express";
 import * as express from "express";
-import * as path from "path";
 import * as logger from "morgan";
-import * as cookieParser from "cookie-parser";
-import * as bodyParser from "body-parser";
+import * as mongoose from "mongoose";
 
+mongoose.Promise = databaseConfig.promise;
+mongoose.connect(databaseConfig.url);
+Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 
-let app = express();
+const app = express();
 
-app.use(logger("dev" as any) as any);
+app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "html");
 
 app.use((req: Request, res: Response, next: Function) => {
-    const err: any = new Error("Not Found");
+    let err: any = new Error("Not Found");
     err.status = 404;
     next(err);
 });
 
-
 if (app.get("env") === "development") {
-    app.use(function(err: any, req: Request, res: Response, next: Function) {
+    app.use((err: any, req: Request, res: Response, next: Function) => {
         res.status(err.status || 500);
-        res.render("error", {
-            message: err.message,
-            error: err
-        });
+        res.json(wrapResult(null, err));
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err: any, req: Request, res: Response, next: Function) {
+app.use((err: any, req: Request, res: Response, next: Function) => {
     res.status(err.status || 500);
-    res.render("error", {
-        message: err.message,
-        error: {}
-    });
+    res.json(wrapResult(null, err));
 });
 
-
-module.exports = app;
+export default app;
