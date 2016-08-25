@@ -8,8 +8,8 @@ export function curr<T, U, Z>(fun: (par1: T, par2: U) => Z): (t: T) => (u: U) =>
     return (t: T) => {
         return (u: U) => {
             return fun(t, u);
-        }
-    }
+        };
+    };
 }
 
 export function encrypt(secret: string, text: string): string {

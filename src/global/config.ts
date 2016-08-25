@@ -1,17 +1,17 @@
 import * as Promise from "bluebird";
 
 export const databaseConfig = {
-    url: process.env.MONGO_URL || "mongodb://localhost/twitter",
     promise: Promise,
-}
+    url: process.env.MONGO_URL || "mongodb://localhost/twitter",
+};
 
 export const appConfig = {
-    secret: "123456789"
-}
+    secret: "123456789",
+};
 
 export const errorConfig = {
     configurable: true,
-    value: function () {
+    value() {
         let alt = {};
         let storeKey = (key) => {
             alt[key] = this[key];

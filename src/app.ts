@@ -1,4 +1,3 @@
-///<reference path="../typings/globals/express-serve-static-core/index.d.ts"/>
 import {databaseConfig, errorConfig} from "./global/config";
 import {wrapResult} from "./global/result";
 import * as bodyParser from "body-parser";
@@ -22,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // noinspection TypeScriptValidateTypes
 app.use(cookieParser());
-
+// noinspection TypeScriptValidateTypes
 app.use((req: Request, res: Response, next: Function) => {
     let err: any = new Error("Not Found");
     err.status = 404;

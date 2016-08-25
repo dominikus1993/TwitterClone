@@ -7,7 +7,7 @@ export interface User extends Document {
     password: string;
     role: Role;
     createdDate: Date;
-    fallowers: User[];  
+    followers: User[];
 }
 
 export interface Token extends Document {
@@ -18,19 +18,19 @@ export interface Token extends Document {
 }
 
 export const TokenSchema = new Schema({
-    user: {required: false, ref: "User" , type: Schema.Types.ObjectId},
-    token: { required: true, type: String},
     createdDate: {required: true, type: Schema.Types.Date},
     expiredDate: {required: true, type: Schema.Types.Date},
+    token: { required: true, type: String},
+    user: { ref: "User", required: false, type: Schema.Types.ObjectId},
 });
 
 export const UserSchema = new Schema({
-    fallowers: [{index: {unique: true}, required: false, ref: "User" , type: Schema.Types.ObjectId}],
-    username: {index: {unique: true}, required: false, type: String},
-    password: { required: true, type: String},
-    role: {type: String, enum: ["User", "Admin"], default: "User"},
-    email: {index: {unique: true}, required: false, type: String},
     createdDate: {required: true, type: Schema.Types.Date},
+    email: {index: {unique: true}, required: false, type: String},
+    followers: [{index: {unique: true}, ref: "User", required: false, type: Schema.Types.ObjectId }],
+    password: { required: true, type: String},
+    role: {default: "User", enum: ["User", "Admin"], type: String},
+    username: {index: {unique: true}, required: false, type: String},
 });
 
 export const UserModel = model<User>("User", UserSchema);

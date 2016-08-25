@@ -8,5 +8,6 @@ export interface Result<TResult, TError> {
 }
 
 export function wrapResult<TResult, TError>(value: TResult, ...messages: TError[]): Result<TResult, TError> {
-    return { isSuccess: !isNullOrUndefined(value), isError: isNullOrUndefined(value), value: value, messages: messages };
+    return { isError: isNullOrUndefined(value), isSuccess: !isNullOrUndefined(value), messages, value };
 }
+
