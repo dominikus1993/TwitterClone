@@ -1,5 +1,5 @@
+import {wrapResult} from "../../src/global/result";
 import {expect} from "chai";
-import {wrapResult, Result} from "../../src/global/result";
 
 describe("wrap result", () => {
 
@@ -7,7 +7,7 @@ describe("wrap result", () => {
         const result = wrapResult(2);
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: true, isError: false, value: 2, messages: [] });
+            expect(result).to.deep.equal({ isError: false, isSuccess: true, value: 2, messages: [] });
         });
     });
 
@@ -15,7 +15,7 @@ describe("wrap result", () => {
         const result = wrapResult({ a: "a" });
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: true, isError: false, value: { a: "a" }, messages: [] });
+            expect(result).to.deep.equal({ isError: false, isSuccess: true, value: { a: "a" }, messages: [] });
         });
     });
 
@@ -23,7 +23,7 @@ describe("wrap result", () => {
         const result = wrapResult(null);
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: false, isError: true, value: null, messages: [] });
+            expect(result).to.deep.equal({ isError: true, isSuccess: false, messages: [], value: null });
         });
     });
 
@@ -31,7 +31,7 @@ describe("wrap result", () => {
         const result = wrapResult(undefined);
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: false, isError: true, value: undefined, messages: [] });
+            expect(result).to.deep.equal({ isError: true, isSuccess: false, messages: [], value: undefined });
         });
     });
 
@@ -39,7 +39,7 @@ describe("wrap result", () => {
         const result = wrapResult(null, "error value is null");
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: false, isError: true, value: null, messages: ["error value is null"] });
+            expect(result).to.deep.equal({ isError: true, isSuccess: false, messages: ["error value is null"], value: null });
         });
     });
 
@@ -47,7 +47,8 @@ describe("wrap result", () => {
         const result = wrapResult(undefined, "error value is undefined");
 
         it("result should equal", () => {
-            expect(result).to.deep.equal({ isSuccess: false, isError: true, value: undefined, messages: ["error value is undefined"] });
+            expect(result).to.deep.equal({ isError: true, isSuccess: false, messages: ["error value is undefined"], value: undefined });
         });
     });
 });
+
