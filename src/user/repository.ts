@@ -14,6 +14,7 @@ export interface IUserRepository {
 
 export interface ITokenRepository {
     save(user: User);
+    findBy(by: Object): Promise<Token>;
 }
 
 export class UserRepository implements IUserRepository {
@@ -52,5 +53,9 @@ export class TokenRepository implements ITokenRepository {
             token: generateToken(),
             user,
         }) as any as Promise<Token>;
+    }
+
+    public findBy(by: Object): Promise<Token> {
+        return this.model.find(by).exec() as any as Promise<Token>;
     }
 }

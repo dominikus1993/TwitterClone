@@ -19,7 +19,11 @@ describe("user repository test", () => {
 
     describe("register user", () => {
         it("should save user without error", (done) => {
-            userRepository.register({ email: "admin@admin.admin", password: "admin", username: "admin" }).then((fulfilled) => {
+            userRepository.register({
+                email: "admin@admin.admin",
+                password: "admin",
+                username: "admin"
+            }).then((fulfilled) => {
                 expect(fulfilled).to.be.not.null;
                 expect(fulfilled.email).to.eq("admin@admin.admin");
                 expect(fulfilled.username).to.eq("admin");
@@ -32,7 +36,7 @@ describe("user repository test", () => {
 
     describe("login user with correct username and password", () => {
         it("should find one user", (done) => {
-            userRepository.login({ password: "admin", username: "admin"}).then((fulfilled) => {
+            userRepository.login({password: "admin", username: "admin"}).then((fulfilled) => {
                 expect(fulfilled).to.be.not.null;
                 expect(fulfilled.email).to.eq("admin@admin.admin");
                 expect(fulfilled.username).to.eq("admin");
@@ -45,7 +49,7 @@ describe("user repository test", () => {
 
     describe("login user with incorrect username and password", () => {
         it("should find one user", (done) => {
-            userRepository.login({ password: "admina" , username: "admina"}).then((fulfilled) => {
+            userRepository.login({password: "admina", username: "admina"}).then((fulfilled) => {
                 expect(fulfilled).to.be.null;
                 done();
             }, (rejected?: any) => {
@@ -55,10 +59,10 @@ describe("user repository test", () => {
     });
 
     describe("save user", () => {
-        const testUser = { email: "admin2@admin.admin", password: "admin", username: "admin2"};
+        const testUser = {email: "admin2@admin.admin", password: "admin", username: "admin2"};
         describe("save token", () => {
             it("should save token by user", (done) => {
-                 userRepository.register(testUser).then((fulfilled: any) => {
+                userRepository.register(testUser).then((fulfilled: any) => {
                     return Promise.resolve(tokenRepository.save(fulfilled));
                 }).then((fulfilled: Token) => {
                     expect(fulfilled).to.be.not.null;
@@ -70,6 +74,25 @@ describe("user repository test", () => {
         });
     });
 
+    describe("save user", () => {
+        const testUser = {email: "admin22@admin.admin", password: "admin", username: "admin22"};
+        describe("save token", () => {
+            describe("should save token by user", () => {
+                it("should get saved token", (done) => {
+                    userRepository.register(testUser).then((fulfilled: any) => {
+                        return Promise.resolve(tokenRepository.save(fulfilled));
+                    }).then((fulfilled: Token) => {
+                        return Promise.resolve(tokenRepository.findBy({_id: fulfilled._id}));
+                    }).then((fulfilled: Token) => {
+                        expect(fulfilled).to.be.not.null;
+                        expect(fulfilled.token).to.be.not.null;
+                        expect(fulfilled.token).to.be.string;
+                        done();
+                    });
+                });
+            });
+        });
+    });
 
     after(() => {
         mongoose.connection.close();
