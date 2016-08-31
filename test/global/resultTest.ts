@@ -1,62 +1,42 @@
 import {wrapResult} from "../../src/global/result";
-import {expect} from "chai";
+import test from "ava";
 
-describe("wrap result", () => {
-    describe("wrap result with number", () => {
-        const result = wrapResult(2);
+test("wrap result with number", (t) => {
+    const result = wrapResult(2);
+    t.deepEqual(result, {isError: false, isSuccess: true, messages: [], value: 2});
+});
 
-        it("result should equal", () => {
-            expect(result).to.deep.equal({isError: false, isSuccess: true, messages: [], value: 2});
-        });
+test("wrap result with object", (t) => {
+    const result = wrapResult({a: "a"});
+    t.deepEqual(result, {isError: false, isSuccess: true, messages: [], value: {a: "a"}});
+});
+
+test("wrap result with null", (t) => {
+    const result = wrapResult(null);
+    t.deepEqual(result, {isError: true, isSuccess: false, messages: [], value: null});
+});
+
+test("wrap result with undefined", (t) => {
+    const result = wrapResult(undefined);
+    t.deepEqual(result, {isError: true, isSuccess: false, messages: [], value: undefined});
+});
+
+test("wrap result with null and message", (t) => {
+    const result = wrapResult(null, "error value is null");
+    t.deepEqual(result, {
+        isError: true,
+        isSuccess: false,
+        messages: ["error value is null"],
+        value: null,
     });
+});
 
-    describe("wrap result with object", () => {
-        const result = wrapResult({a: "a"});
-
-        it("result should equal", () => {
-            expect(result).to.deep.equal({isError: false, isSuccess: true, messages: [], value: {a: "a"}});
-        });
-    });
-
-    describe("wrap result with null", () => {
-        const result = wrapResult(null);
-
-        it("result should equal", () => {
-            expect(result).to.deep.equal({isError: true, isSuccess: false, messages: [], value: null});
-        });
-    });
-
-    describe("wrap result with undefined", () => {
-        const result = wrapResult(undefined);
-
-        it("result should equal", () => {
-            expect(result).to.deep.equal({isError: true, isSuccess: false, messages: [], value: undefined});
-        });
-    });
-
-    describe("wrap result with null and message", () => {
-        const result = wrapResult(null, "error value is null");
-
-        it("result should equal", () => {
-            expect(result).to.deep.equal({
-                isError: true,
-                isSuccess: false,
-                messages: ["error value is null"],
-                value: null,
-            });
-        });
-    });
-
-    describe("wrap result with undefined and message", () => {
-        const result = wrapResult(undefined, "error value is undefined");
-
-        it("result should equal", () => {
-            expect(result).to.deep.equal({
-                isError: true,
-                isSuccess: false,
-                messages: ["error value is undefined"],
-                value: undefined,
-            });
-        });
+test("wrap result with undefined and message", (t) => {
+    const result = wrapResult(undefined, "error value is null");
+    t.deepEqual(result, {
+        isError: true,
+        isSuccess: false,
+        messages: ["error value is undefined"],
+        value: undefined,
     });
 });

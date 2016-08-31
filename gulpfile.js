@@ -5,7 +5,7 @@ const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
-const mocha = require("gulp-mocha");
+const ava = require("gulp-ava");
 const sourcemap = require("gulp-sourcemaps");
 const tslint = require("gulp-tslint");
 
@@ -48,9 +48,7 @@ gulp.task("lint", () => {
 
 gulp.task("test", ["compile", "lint"], () => {
     return gulp.src("test/**/*.js")
-        .pipe(mocha({
-            reporter: "nyan"
-        }));
+        .pipe(ava({verbose: true}));
 });
 
 gulp.task("watch", () => {
