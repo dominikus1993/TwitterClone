@@ -7,7 +7,7 @@ export interface User extends Document {
     password: string;
     role: Role;
     createdDate: Date;
-    followers: User[];
+    followers: string[] | User[];
 }
 
 export interface Token extends Document {
