@@ -1,7 +1,5 @@
-import {expect} from "chai";
+import test from "ava";
 
-describe("test truth", () => {
-    it("true is equal to true", () => {
-        expect(true).to.be.true;
-    });
+test("truth test" , t => {
+   t.true(true);
 });

@@ -27,6 +27,7 @@
     "q": "^1.4.1"
   },
   "devDependencies": {
+    "ava": "^0.16.0",
     "browser-sync": "^2.14.0",
     "gulp": "^3.9.1",
     "gulp-mocha": "^3.0.1",
