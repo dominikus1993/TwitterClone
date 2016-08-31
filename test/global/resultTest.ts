@@ -32,7 +32,7 @@ test("wrap result with null and message", (t) => {
 });
 
 test("wrap result with undefined and message", (t) => {
-    const result = wrapResult(undefined, "error value is null");
+    const result = wrapResult(undefined, "error value is undefined");
     t.deepEqual(result, {
         isError: true,
         isSuccess: false,
