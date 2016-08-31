@@ -22,7 +22,7 @@ describe("user repository test", () => {
             userRepository.register({
                 email: "admin@admin.admin",
                 password: "admin",
-                username: "admin"
+                username: "admin",
             }).then((fulfilled) => {
                 expect(fulfilled).to.be.not.null;
                 expect(fulfilled.email).to.eq("admin@admin.admin");
