@@ -1,100 +1,98 @@
 import {databaseConfig} from "../../src/global/config";
 import {Token, TokenModel, UserModel} from "../../src/user/model";
 import {ITokenRepository, IUserRepository, TokenRepository, UserRepository} from "../../src/user/repository";
-import {expect} from "chai";
+import test from "ava";
 import * as mongoose from "mongoose";
 
-describe("user repository test", () => {
-    let userRepository: IUserRepository;
-    let tokenRepository: ITokenRepository;
-    before((done) => {
-        mongoose.Promise = databaseConfig.promise;
-        mongoose.connect("mongodb://localhost/twitter-test").then(() => {
-            mongoose.connection.db.dropDatabase();
-            userRepository = new UserRepository(UserModel);
-            tokenRepository = new TokenRepository(TokenModel);
-            done();
-        });
-    });
+let userRepository: IUserRepository;
+let tokenRepository: ITokenRepository;
 
-    describe("register user", () => {
-        it("should save user without error", (done) => {
-            userRepository.register({
-                email: "admin@admin.admin",
-                password: "admin",
-                username: "admin",
-            }).then((fulfilled) => {
-                expect(fulfilled).to.be.not.null;
-                expect(fulfilled.email).to.eq("admin@admin.admin");
-                expect(fulfilled.username).to.eq("admin");
-                done();
-            }, (rejected?: any) => {
-                done(rejected);
-            });
-        });
+test.before("set mongodb", () => {
+    mongoose.Promise = databaseConfig.promise;
+    return mongoose.connect("mongodb://localhost/twitter-test").then(() => {
+        mongoose.connection.db.dropDatabase();
+        userRepository = new UserRepository(UserModel);
+        tokenRepository = new TokenRepository(TokenModel);
     });
+});
 
-    describe("login user with correct username and password", () => {
-        it("should find one user", (done) => {
-            userRepository.login({password: "admin", username: "admin"}).then((fulfilled) => {
-                expect(fulfilled).to.be.not.null;
-                expect(fulfilled.email).to.eq("admin@admin.admin");
-                expect(fulfilled.username).to.eq("admin");
-                done();
-            }, (rejected?: any) => {
-                done(rejected);
-            });
-        });
+test("register user", (t) => {
+    return userRepository.register({
+        email: "admin@admin.admin",
+        password: "admin",
+        username: "admin",
+    }).then((fulfilled) => {
+        t.not(fulfilled, null);
+        t.is(fulfilled.email, "admin@admin.admin");
+        t.is(fulfilled.username, "admin");
+        t.pass();
+    }, (rejected?: any) => {
+        t.fail(rejected);
     });
+});
 
-    describe("login user with incorrect username and password", () => {
-        it("should find one user", (done) => {
-            userRepository.login({password: "admina", username: "admina"}).then((fulfilled) => {
-                expect(fulfilled).to.be.null;
-                done();
-            }, (rejected?: any) => {
-                done(rejected);
-            });
-        });
+test("login user with correct username and password", (t) => {
+    const user = {
+        email: "admin@admin.admin",
+        password: "admin",
+        username: "admin",
+    };
+    return Promise.resolve(userRepository.register(user)).then((fulfilled) => {
+        return Promise.resolve(userRepository.login({password: user.password, username: user.username}));
+    }).then((fulfilled) => {
+        t.not(fulfilled, null);
+        t.is(fulfilled.email, "admin@admin.admin");
+        t.is(fulfilled.username, "admin");
+        t.pass();
+    }, (rejected?: any) => {
+        t.fail(rejected);
     });
+});
 
-    describe("save user", () => {
-        const testUser = {email: "admin2@admin.admin", password: "admin", username: "admin2"};
-        describe("save token", () => {
-            it("should save token by user", (done) => {
-                userRepository.register(testUser).then((fulfilled: any) => {
-                    return Promise.resolve(tokenRepository.save(fulfilled));
-                }).then((fulfilled: Token) => {
-                    expect(fulfilled).to.be.not.null;
-                    expect(fulfilled.token).to.be.not.null;
-                    expect(fulfilled.token).to.be.string;
-                    done();
-                });
-            });
-        });
+test("login user with incorrect username and password", (t) => {
+    const user = {
+        email: "admin1@admin1.admin1",
+        password: "admin1",
+        username: "admin1",
+    };
+    return Promise.resolve(userRepository.register(user)).then((fulfilled) => {
+        return Promise.resolve(userRepository.login({password: user.password + "aa", username: user.username}));
+    }).then((fulfilled) => {
+        t.is(fulfilled, null);
+        t.pass();
+    }, (rejected?: any) => {
+        t.fail(rejected);
     });
+});
 
-    describe("save user", () => {
-        const testUser = {email: "admin22@admin.admin", password: "admin", username: "admin22"};
-        describe("save token", () => {
-            describe("should save token by user", () => {
-                it("should get saved token", (done) => {
-                    userRepository.register(testUser).then((fulfilled: any) => {
-                        return Promise.resolve(tokenRepository.save(fulfilled));
-                    }).then((fulfilled: Token) => {
-                        return Promise.resolve(tokenRepository.findBy({_id: fulfilled._id}));
-                    }).then((fulfilled: Token) => {
-                        expect(fulfilled).to.be.not.null;
-                        expect(fulfilled.token).to.be.not.null;
-                        expect(fulfilled.token).to.be.string;
-                        done();
-                    });
-                });
-            });
-        });
+test("save token", (t) => {
+    const testUser = {email: "admin222@admin.admin", password: "admin", username: "admin22"};
+    return userRepository.register(testUser).then((fulfilled: any) => {
+        return Promise.resolve(tokenRepository.save(fulfilled));
+    }).then((fulfilled: Token) => {
+        t.not(fulfilled, null);
+        t.not(fulfilled.token, null);
+        t.pass();
+    }).catch((error?: any) => {
+        t.fail(error);
     });
+});
 
-    after(() => {
-        mongoose.connection.close();
+test("get saved token", (t) => {
+    const testUser = {email: "admin222@admin.admin", password: "admin", username: "admin22"};
+    return userRepository.register(testUser).then((fulfilled: any) => {
+        return Promise.resolve(tokenRepository.save(fulfilled));
+    }).then((fulfilled: Token) => {
+        return Promise.resolve(tokenRepository.findBy({_id: fulfilled._id}));
+    }).then((fulfilled: Token) => {
+        t.not(fulfilled, null);
+        t.not(fulfilled.token, null);
+        t.pass();
+    }).catch((error?: any) => {
+        t.fail(error);
     });
+});
+
+test.after("clear database", () => {
+    mongoose.connection.close();
 });
