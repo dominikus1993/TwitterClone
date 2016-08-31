@@ -1,12 +1,12 @@
 import {databaseConfig} from "../../src/global/config";
-import {ITokenRepository, IUserRepository, TokenRepository, UserRepository} from "../../src/user/repository";
 import {Token, TokenModel, UserModel} from "../../src/user/model";
+import {ITokenRepository, IUserRepository, TokenRepository, UserRepository} from "../../src/user/repository";
 import {expect} from "chai";
 import * as mongoose from "mongoose";
 
 describe("user repository test", () => {
     let userRepository: IUserRepository;
-    let tokenRepository: ITokenRepository
+    let tokenRepository: ITokenRepository;
     before((done) => {
         mongoose.Promise = databaseConfig.promise;
         mongoose.connect("mongodb://localhost/twitter-test").then(() => {
