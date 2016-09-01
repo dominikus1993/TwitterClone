@@ -25,6 +25,7 @@ test("register user", (t) => {
         t.not(fulfilled, null);
         t.is(fulfilled.email, "admin@admin.admin");
         t.is(fulfilled.username, "admin");
+        t.is(fulfilled.role, "User");
         t.pass();
     }, (rejected?: any) => {
         t.fail(rejected);

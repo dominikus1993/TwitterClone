@@ -7,7 +7,7 @@ import * as Promise from "bluebird";
 
 export class UserRepositoryStub implements IUserRepository {
     public register(data: {email: string; username: string; password: string}): Promise<User> {
-        return undefined;
+        return Promise.resolve({email: data.email, password: data.password, username : data.username} as any);
     }
 
     public login(data: {username: string; password: string}): Promise<User> {
