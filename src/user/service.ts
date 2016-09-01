@@ -1,6 +1,6 @@
 import {Token} from "./model";
 import {ITokenRepository, IUserRepository} from "./repository";
-import Promise from  "bluebird";
+import * as Promise from  "bluebird";
 
 export interface IUserService{
     login(user: {username: string, password: string}): Promise<Token>;

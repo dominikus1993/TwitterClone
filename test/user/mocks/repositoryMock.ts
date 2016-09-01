@@ -1,5 +1,6 @@
 import {Token, User} from "../../../src/user/model";
 import {ITokenRepository, IUserRepository} from "../../../src/user/repository";
+import * as Promise from "bluebird";
 /**
  * Created by domin on 01.09.2016.
  */
