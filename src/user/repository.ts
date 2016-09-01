@@ -13,7 +13,7 @@ export interface IUserRepository {
 }
 
 export interface ITokenRepository {
-    save(user: User);
+    save(user: User): Promise<Token> ;
     findBy(by: Object): Promise<Token>;
 }
 
