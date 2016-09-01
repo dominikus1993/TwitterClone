@@ -13,7 +13,7 @@ const tsFiles = ["src/**/*.ts", "test/**/*.ts", "typings/**/**.ts"];
 const jsFiles = ["src/**/*.js", "!node_modules/**/*.js", "test/**/*.js"];
 const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
 
-var tsProject = typescript.createProject("tsconfig.json");
+const tsProject = typescript.createProject("tsconfig.json");
 
 
 function lint() {
@@ -47,7 +47,7 @@ gulp.task("lint", () => {
 });
 
 gulp.task("test", ["compile", "lint"], () => {
-    return gulp.src("test/**/*.js")
+    return gulp.src(["test/**/*.js", "!test/**/mocks/*.js"])
         .pipe(ava({verbose: true}));
 });
 
