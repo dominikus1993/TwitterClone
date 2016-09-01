@@ -6,21 +6,21 @@ import * as Promise from "bluebird";
  */
 
 export class UserRepositoryStub implements IUserRepository {
-    register(data: {email: string; username: string; password: string}): Promise<User> {
+    public register(data: {email: string; username: string; password: string}): Promise<User> {
         return undefined;
     }
 
-    login(data: {username: string; password: string}): Promise<User> {
+    public login(data: {username: string; password: string}): Promise<User> {
         return undefined;
     }
 }
 
 export class TokenRepositoryStub implements ITokenRepository {
-    save(user: User): Promise<Token> {
+    public save(user: User): Promise<Token> {
         return undefined;
     }
 
-    findBy(by: Object): Promise<Token> {
+    public findBy(by: Object): Promise<Token> {
         return undefined;
     }
 }
