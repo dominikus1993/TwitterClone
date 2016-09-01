@@ -32,4 +32,3 @@ test("generate Token", (t) => {
     const result = generateToken();
     t.not(result, null);
 });
-
