@@ -5,8 +5,8 @@ import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
 
 export interface IUserService {
-    login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
-    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, Error>>;
+    login(user: {username: string, password: string}): Promise<Result<Token, string>>;
+    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, string>>;
 }
 
 export class UserService implements IUserService {
@@ -15,16 +15,16 @@ export class UserService implements IUserService {
 
     }
 
-    public login(user: {username: string; password: string}): Promise<Result<Token, Error>> {
+    public login(user: {username: string; password: string}): Promise<Result<Token, string>> {
         return undefined;
     }
 
-    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, Error>> {
+    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, string>> {
         return new Promise((resolve, reject) => {
             if (user.password === user.passwordConfirm) {
                 resolve(Promise.resolve(user));
             } else {
-                reject(Promise.reject(new Error(errorMessages.passwordNotEqual)));
+                reject(Promise.reject(errorMessages.passwordNotEqual));
             }
         }).then((fulfilled: {username: string; email: string; password: string; passwordConfirm: string}) => {
             const promise = this.userRepository.register({
