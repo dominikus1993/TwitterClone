@@ -3,9 +3,9 @@ import {Token, User} from "./model";
 import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
 
-export interface IUserService{
-    login(user: {username: string, password: string}): Promise<Result<Token>>;
-    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User>>;
+export interface IUserService {
+    login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
+    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, Error>>;
 }
 
 export class UserService implements IUserService {
@@ -14,11 +14,11 @@ export class UserService implements IUserService {
 
     }
 
-    public login(user: {username: string; password: string}): Promise<Result<Token>> {
+    public login(user: {username: string; password: string}): Promise<Result<Token, Error>> {
         return undefined;
     }
 
-    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User>> {
+    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, Error>> {
         return undefined;
     }
 }
