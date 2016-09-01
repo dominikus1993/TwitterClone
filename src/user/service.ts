@@ -34,10 +34,10 @@ export class UserService implements IUserService {
             });
             return Promise.resolve(promise);
         }, (rejected?: Error) => {
-            return Promise.reject(wrapResult(null, wrapResult(rejected)));
+            return Promise.reject(rejected);
         }).then((fulfilled) => {
             return Promise.resolve(wrapResult(fulfilled));
-        }, (rejected) => {
+        }, (rejected?: any) => {
             return Promise.reject(wrapResult(null, rejected));
         });
     }
