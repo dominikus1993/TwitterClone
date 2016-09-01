@@ -48,7 +48,7 @@ gulp.task("lint", () => {
 
 gulp.task("test", ["compile", "lint"], () => {
     return gulp.src(["test/**/*.js", "!test/**/mocks/*.js"])
-        .pipe(ava({verbose: true}));
+        .pipe(ava({verbose: true, nyc: true}));
 });
 
 gulp.task("watch", () => {
@@ -56,7 +56,7 @@ gulp.task("watch", () => {
 });
 
 gulp.task("nodemon", ['compile'], () => {
-    var started = false;
+    let started = false;
 
     nodemon({
         script: './src/app.js',

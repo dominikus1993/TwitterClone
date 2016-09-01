@@ -38,6 +38,7 @@
     "gulp-watch": "^4.3.9",
     "karma": "1.2.0",
     "nodemon": "1.10.0",
+    "nyc": "^8.1.0",
     "tern-node-express": "^0.4.0",
     "tslint": "^3.14.0"
   }
