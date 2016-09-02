@@ -10,6 +10,7 @@ const encode = curr(encrypt)(appConfig.secret);
 export interface IUserRepository {
     register(data: { email: string, username: string, password: string }): Promise<User>;
     login(data: { username: string, password: string }): Promise<User>;
+    findBy(by: Object): Promise<User>;
 }
 
 export interface ITokenRepository {
@@ -18,6 +19,7 @@ export interface ITokenRepository {
 }
 
 export class UserRepository implements IUserRepository {
+
     constructor(private userModel: Model<User>) {
 
     }
@@ -35,6 +37,10 @@ export class UserRepository implements IUserRepository {
         return this.userModel
             .findOne({ password: encode(data.password), username: data.username })
             .exec() as any as Promise<User>;
+    }
+
+    public findBy(by: Object): Promise<User> {
+        return this.userModel.find(by).exec() as any as Promise;
     }
 }
 

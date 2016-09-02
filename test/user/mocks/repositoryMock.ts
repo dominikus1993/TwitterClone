@@ -1,6 +1,7 @@
 import {Token, User} from "../../../src/user/model";
 import {ITokenRepository, IUserRepository} from "../../../src/user/repository";
 import * as Promise from "bluebird";
+import * as moment from "moment";
 
 export class UserRepositoryStub implements IUserRepository {
     public register(data: {email: string; username: string; password: string}): Promise<User> {
@@ -18,10 +19,19 @@ export class UserRepositoryStub implements IUserRepository {
 
 export class TokenRepositoryStub implements ITokenRepository {
     public save(user: User): Promise<Token> {
-        return  Promise.resolve({createdDate: new Date(), expiredDate: new Date(), token: "siema", user} as any);
+        return Promise.resolve({createdDate: new Date(), expiredDate: new Date(), token: "test", user} as any);
     }
 
     public findBy(by: Object): Promise<Token> {
-        return undefined;
+        if ((by as any).token === "test") {
+            return Promise.resolve({
+                createdDate: moment(new Date()).subtract({days: 1}).toDate(),
+                expiredDate: moment(new Date()).add({days: 1}).toDate(),
+                token: "test",
+                user: {},
+            } as any);
+        } else {
+            return Promise.resolve(null);
+        }
     }
 }

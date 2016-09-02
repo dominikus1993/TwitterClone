@@ -39,3 +39,26 @@ test("login method when login is wrong", (t) => {
     const user = {password: "admin", username: "admin2"};
     return t.throws(service.login(user), errorMessages.usernameOrPasswordIsWrong);
 });
+
+test("isLogged when user is logged", (t) => {
+    const token = {
+        createdDate: moment(new Date()).subtract({days: 1}).toDate(),
+        expiredDate: moment(new Date()).add({days: 1}).toDate(),
+        token: "test",
+        user: {},
+    };
+    return service.isLogged(token as any)
+        .then((fulfilled: Result<Token, Error>) => {
+            t.truthy(fulfilled.isSuccess);
+        });
+});
+
+test("isLogged when user is not logged", (t) => {
+    const token = {
+        createdDate: moment(new Date()).subtract({days: 1}).toDate(),
+        expiredDate: moment(new Date()).add({days: 1}).toDate(),
+        token: "test",
+        user: {},
+    };
+    return t.throws(service.isLogged(token as any), errorMessages.userIsNotLogged);
+});

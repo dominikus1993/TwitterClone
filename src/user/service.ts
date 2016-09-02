@@ -8,6 +8,7 @@ import * as Promise from  "bluebird";
 export interface IUserService {
     login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
     register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, Error>>;
+    isLogged(token: Token): Promise<Result<User, Error>>;
 }
 
 export class UserService implements IUserService {
@@ -49,6 +50,15 @@ export class UserService implements IUserService {
             return Promise.resolve(wrapResult(fulfilled));
         }, (rejected?: any) => {
             return Promise.reject(rejected);
+        });
+    }
+
+    public isLogged(token: Token): Promise<Result<User, Error>> {
+        return this.tokenRepository.findBy({token: token.token}).then((fulfilled) => {
+            if (isNullOrUndefined(fulfilled)) {
+                return Promise.reject(new Error(errorMessages.passwordNotEqual));
+            }
+            return Promise.resolve(null);
         });
     }
 }
