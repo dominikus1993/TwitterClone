@@ -42,8 +42,8 @@ test("login user with correct username and password", (t) => {
         return Promise.resolve(userRepository.login({password: user.password, username: user.username}));
     }).then((fulfilled) => {
         t.not(fulfilled, null);
-        t.is(fulfilled.email, user.email);
-        t.is(fulfilled.username, user.username);
+        t.is(fulfilled.email, "admin@admin.admin");
+        t.is(fulfilled.username, "admin");
         t.pass();
     }, (rejected?: any) => {
         t.fail(rejected);
@@ -66,14 +66,14 @@ test("login user with incorrect username and password", (t) => {
     });
 });
 
-test("get user by username and password", (t) => {
+test("get user by username", (t) => {
     const user = {
         email: "test@test@test",
         password: "test",
         username: "test",
     };
-    return Promise.resolve(userRepository.register(user)).then(() => {
-        return Promise.resolve(userRepository.findBy({password: user.password, username: user.username}));
+    return Promise.resolve(userRepository.register(user)).then((fulfilled) => {
+        return Promise.resolve(userRepository.findBy({username: fulfilled.username}));
     }).then((fulfilled) => {
         t.not(fulfilled, null);
         t.is(fulfilled.email, user.email);

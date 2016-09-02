@@ -40,7 +40,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public findBy(by: Object): Promise<User> {
-        return this.userModel.find(by).exec() as any as Promise;
+        return this.userModel.find(by).exec() as any as Promise<User>;
     }
 }
 

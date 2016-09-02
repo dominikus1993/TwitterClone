@@ -4,6 +4,7 @@ import {isNullOrUndefined} from "../global/utils";
 import {Token, User} from "./model";
 import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
+import * as moment from "moment";
 
 export interface IUserService {
     login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
@@ -58,7 +59,16 @@ export class UserService implements IUserService {
             if (isNullOrUndefined(fulfilled)) {
                 return Promise.reject(new Error(errorMessages.passwordNotEqual));
             }
-            return Promise.resolve(null);
+
+            if (moment(fulfilled.expiredDate).isBefore(moment.now())) {
+                return Promise.resolve(this.userRepository.findBy({_id: fulfilled.user}));
+            }
+
+            return Promise.reject(new Error(errorMessages.tokenExpired));
+        }).then((fulfilled) => {
+            return Promise.resolve(wrapResult(fulfilled));
+        }, (rejected?: any) => {
+            return Promise.reject(rejected);
         });
     }
 }

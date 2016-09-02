@@ -48,7 +48,7 @@ test("isLogged when user is logged", (t) => {
         user: {},
     };
     return service.isLogged(token as any)
-        .then((fulfilled: Result<Token, Error>) => {
+        .then((fulfilled: Result<User, Error>) => {
             t.truthy(fulfilled.isSuccess);
         });
 });
