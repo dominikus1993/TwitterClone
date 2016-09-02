@@ -1,5 +1,6 @@
 import {errorMessages} from "../global/constants";
 import {Result, wrapResult} from "../global/result";
+import {isNullOrUndefined} from "../global/utils";
 import {Token, User} from "./model";
 import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
@@ -16,7 +17,14 @@ export class UserService implements IUserService {
     }
 
     public login(user: {username: string; password: string}): Promise<Result<Token, Error>> {
-        return undefined;
+        return this.userRepository.login(user).then((fulfilled: User) => {
+            if (isNullOrUndefined(fulfilled)) {
+                return Promise.reject(new Error(errorMessages.usernameOrPasswordIsWrong));
+            }
+            return Promise.resolve(this.tokenRepository.save(fulfilled));
+        }).then((fulfilled) => {
+            return wrapResult(fulfilled);
+        });
     }
 
     public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, Error>> {
