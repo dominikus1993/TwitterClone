@@ -15,6 +15,10 @@ export class UserRepositoryStub implements IUserRepository {
             return Promise.resolve(null);
         }
     }
+
+    public findBy(by: Object): Promise<User> {
+        return undefined;
+    }
 }
 
 export class TokenRepositoryStub implements ITokenRepository {
