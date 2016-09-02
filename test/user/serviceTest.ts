@@ -1,5 +1,6 @@
+import {errorMessages} from "../../src/global/constants";
 import {Result} from "../../src/global/result";
-import {User, Token} from "../../src/user/model";
+import {Token, User} from "../../src/user/model";
 import {UserService} from "../../src/user/service";
 import {TokenRepositoryStub, UserRepositoryStub} from "./mocks/repositoryMock";
 import test from "ava";
@@ -18,7 +19,7 @@ test("register method", (t) => {
 
 test("register method when passwrod and passwrod confirm is not equal", (t) => {
     const user = {email: "admin", password: "admin", passwordConfirm: "admin2", username: "admin"};
-    return t.throws(service.register(user), "Password is not equal to password confirm");
+    return t.throws(service.register(user), errorMessages.passwordNotEqual);
 });
 
 test("login method", (t) => {
@@ -30,11 +31,11 @@ test("login method", (t) => {
 });
 
 test("login method when password is wrong", (t) => {
-    const user = {password: "admin", username: "admin"};
-    return t.throws(service.login(user), "Password is not equal to password confirm");
+    const user = {password: "admin2", username: "admin"};
+    return t.throws(service.login(user), errorMessages.usernameOrPasswordIsWrong);
 });
 
 test("login method when login is wrong", (t) => {
-    const user = {password: "admin", username: "admin"};
-    return t.throws(service.login(user), "Password is not equal to password confirm");
+    const user = {password: "admin", username: "admin2"};
+    return t.throws(service.login(user), errorMessages.usernameOrPasswordIsWrong);
 });

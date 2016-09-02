@@ -22,8 +22,10 @@ export class UserService implements IUserService {
                 return Promise.reject(new Error(errorMessages.usernameOrPasswordIsWrong));
             }
             return Promise.resolve(this.tokenRepository.save(fulfilled));
-        }).then((fulfilled) => {
-            return wrapResult(fulfilled);
+        }).then((fulfilled: Token) => {
+            return Promise.resolve(wrapResult(fulfilled));
+        }, (rejected?: any) => {
+            return Promise.reject(rejected);
         });
     }
 
