@@ -66,14 +66,14 @@ test("login user with incorrect username and password", (t) => {
     });
 });
 
-test("get user by username", (t) => {
+test("get user by email", (t) => {
     const user = {
         email: "test@test@test",
         password: "test",
         username: "test",
     };
     return Promise.resolve(userRepository.register(user)).then((fulfilled) => {
-        return Promise.resolve(userRepository.findBy({username: fulfilled.username}));
+        return Promise.resolve(userRepository.findBy({email: fulfilled.email}));
     }).then((fulfilled) => {
         t.not(fulfilled, null);
         t.is(fulfilled.email, user.email);
@@ -102,7 +102,7 @@ test("get saved token", (t) => {
     return userRepository.register(testUser).then((fulfilled: any) => {
         return Promise.resolve(tokenRepository.save(fulfilled));
     }).then((fulfilled: Token) => {
-        return Promise.resolve(tokenRepository.findBy({_id: fulfilled._id}));
+        return Promise.resolve(tokenRepository.findBy({token: fulfilled.token}));
     }).then((fulfilled: Token) => {
         t.not(fulfilled, null);
         t.not(fulfilled.token, null);

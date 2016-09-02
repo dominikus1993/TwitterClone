@@ -4,6 +4,7 @@ import {Token, User} from "../../src/user/model";
 import {UserService} from "../../src/user/service";
 import {TokenRepositoryStub, UserRepositoryStub} from "./mocks/repositoryMock";
 import test from "ava";
+import * as moment from "moment";
 
 const service = new UserService(new UserRepositoryStub(), new TokenRepositoryStub());
 
