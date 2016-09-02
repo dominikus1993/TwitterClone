@@ -1,5 +1,5 @@
 import {Result} from "../../src/global/result";
-import {User} from "../../src/user/model";
+import {User, Token} from "../../src/user/model";
 import {UserService} from "../../src/user/service";
 import {TokenRepositoryStub, UserRepositoryStub} from "./mocks/repositoryMock";
 import test from "ava";
@@ -19,4 +19,22 @@ test("register method", (t) => {
 test("register method when passwrod and passwrod confirm is not equal", (t) => {
     const user = {email: "admin", password: "admin", passwordConfirm: "admin2", username: "admin"};
     return t.throws(service.register(user), "Password is not equal to password confirm");
+});
+
+test("login method", (t) => {
+    const user = {password: "admin", username: "admin"};
+    return service.login(user)
+        .then((fulfilled: Result<Token, Error>) => {
+            t.truthy(fulfilled.isSuccess);
+        });
+});
+
+test("login method when password is wrong", (t) => {
+    const user = {password: "admin", username: "admin"};
+    return t.throws(service.login(user), "Password is not equal to password confirm");
+});
+
+test("login method when login is wrong", (t) => {
+    const user = {password: "admin", username: "admin"};
+    return t.throws(service.login(user), "Password is not equal to password confirm");
 });
