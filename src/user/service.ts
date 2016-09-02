@@ -5,8 +5,8 @@ import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
 
 export interface IUserService {
-    login(user: {username: string, password: string}): Promise<Result<Token, string>>;
-    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, string>>;
+    login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
+    register(user: { username: string; email: string; password: string; passwordConfirm: string }): Promise<Result<User, Error>>;
 }
 
 export class UserService implements IUserService {
@@ -15,16 +15,16 @@ export class UserService implements IUserService {
 
     }
 
-    public login(user: {username: string; password: string}): Promise<Result<Token, string>> {
+    public login(user: {username: string; password: string}): Promise<Result<Token, Error>> {
         return undefined;
     }
 
-    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, string>> {
+    public register(user: {username: string; email: string; password: string; passwordConfirm: string}): Promise<Result<User, Error>> {
         return new Promise((resolve, reject) => {
             if (user.password === user.passwordConfirm) {
-                resolve(Promise.resolve(user));
+                resolve(user);
             } else {
-                reject(Promise.reject(errorMessages.passwordNotEqual));
+                reject(new Error(errorMessages.passwordNotEqual));
             }
         }).then((fulfilled: {username: string; email: string; password: string; passwordConfirm: string}) => {
             const promise = this.userRepository.register({
@@ -38,7 +38,7 @@ export class UserService implements IUserService {
         }).then((fulfilled) => {
             return Promise.resolve(wrapResult(fulfilled));
         }, (rejected?: any) => {
-            return Promise.reject(wrapResult(null, rejected));
+            return Promise.reject(rejected);
         });
     }
 }
