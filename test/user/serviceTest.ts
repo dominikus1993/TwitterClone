@@ -44,9 +44,9 @@ test("login method when login is wrong", (t) => {
 test("isLogged when user is logged", (t) => {
     const token = {
         createdDate: moment(new Date()).subtract({days: 1}).toDate(),
-        expiredDate: moment(new Date()).add({days: 1}).toDate(),
+        expiredDate: moment(new Date()).add({days: 11}).toDate(),
         token: "test",
-        user: {},
+        user: "123456",
     };
     return service.isLogged(token as any)
         .then((fulfilled: Result<User, Error>) => {
@@ -58,8 +58,18 @@ test("isLogged when user is not logged", (t) => {
     const token = {
         createdDate: moment(new Date()).subtract({days: 1}).toDate(),
         expiredDate: moment(new Date()).add({days: 1}).toDate(),
-        token: "test",
+        token: "test2",
         user: {},
     };
     return t.throws(service.isLogged(token as any), errorMessages.userIsNotLogged);
+});
+
+test("isLogged when token expired", (t) => {
+    const token = {
+        createdDate: moment(new Date()).subtract({days: 10}).toDate(),
+        expiredDate: moment(new Date()).subtract({days: 1}).toDate(),
+        token: "test",
+        user: {},
+    };
+    return t.throws(service.isLogged(token as any), errorMessages.tokenExpired);
 });

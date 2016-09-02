@@ -57,10 +57,10 @@ export class UserService implements IUserService {
     public isLogged(token: Token): Promise<Result<User, Error>> {
         return this.tokenRepository.findBy({token: token.token}).then((fulfilled) => {
             if (isNullOrUndefined(fulfilled)) {
-                return Promise.reject(new Error(errorMessages.passwordNotEqual));
+                return Promise.reject(new Error(errorMessages.userIsNotLogged));
             }
 
-            if (moment(fulfilled.expiredDate).isBefore(moment.now())) {
+            if (moment(fulfilled.expiredDate).isAfter(moment.now())) {
                 return Promise.resolve(this.userRepository.findBy({_id: fulfilled.user}));
             }
 

@@ -17,7 +17,7 @@ export class UserRepositoryStub implements IUserRepository {
     }
 
     public findBy(by: Object): Promise<User> {
-        return Promise.resolve({email: "test@test.test", password: test, username: "test"} as any);
+        return Promise.resolve({email: "test@test.test", password: "test", username: "test"} as any);
     }
 }
 
