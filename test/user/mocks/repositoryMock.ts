@@ -27,7 +27,7 @@ export class TokenRepositoryStub implements ITokenRepository {
     }
 
     public findBy(by: Object): Promise<Token> {
-        if ((by as any).token === "test") {
+        if ((by as any).token === "test" || (by as any).token === "testexpired") {
             return Promise.resolve({
                 createdDate: moment(new Date()).subtract({days: 1}).toDate(),
                 expiredDate: moment(new Date()).add({days: 1}).toDate(),

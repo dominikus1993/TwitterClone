@@ -68,7 +68,7 @@ test("isLogged when token expired", (t) => {
     const token = {
         createdDate: moment(new Date()).subtract({days: 10}).toDate(),
         expiredDate: moment(new Date()).subtract({days: 1}).toDate(),
-        token: "test",
+        token: "testexpired",
         user: {},
     };
     return t.throws(service.isLogged(token as any), errorMessages.tokenExpired);

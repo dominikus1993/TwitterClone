@@ -4,7 +4,6 @@ import {isNullOrUndefined} from "../global/utils";
 import {Token, User} from "./model";
 import {ITokenRepository, IUserRepository} from "./repository";
 import * as Promise from  "bluebird";
-import * as moment from "moment";
 
 export interface IUserService {
     login(user: {username: string, password: string}): Promise<Result<Token, Error>>;
@@ -60,7 +59,7 @@ export class UserService implements IUserService {
                 return Promise.reject(new Error(errorMessages.userIsNotLogged));
             }
 
-            if (moment(fulfilled.expiredDate).isAfter(moment.now())) {
+            if (token.expiredDate.getTime() > new Date().getTime()) {
                 return Promise.resolve(this.userRepository.findBy({_id: fulfilled.user}));
             }
 
