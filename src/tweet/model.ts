@@ -16,4 +16,4 @@ export const TweetSchema = new Schema({
     resenders: [{ref: "User", type: Schema.Types.ObjectId}],
 });
 
-export const UserModel = model<Tweet>("Post", TweetSchema);
+export const TweetModel = model<Tweet>("Post", TweetSchema);
