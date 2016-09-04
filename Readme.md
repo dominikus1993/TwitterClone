@@ -1,4 +1,4 @@
-Twitter clone written in [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-v18.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+Twitter clone written in [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-v18.svg?v=101)](https://github.com/ellerbrock/typescript-badges/) [![Code Climate](https://codeclimate.com/github/dominikus1993/twitterClone/badges/gpa.svg)](https://codeclimate.com/github/dominikus1993/twitterClone) [![Test Coverage](https://codeclimate.com/github/dominikus1993/twitterClone/badges/coverage.svg)](https://codeclimate.com/github/dominikus1993/twitterClone/coverage)
 
 |    CI    |      Status   |
 |----------|:-------------:|
