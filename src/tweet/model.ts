@@ -5,7 +5,6 @@ type LikeType = "LIKE" | "UNLIKE";
 
 interface Tag extends Document {
     name: string;
-    tweets: string[] | Tweet[];
 }
 
 interface Like extends Document {
@@ -24,13 +23,26 @@ interface Tweet extends Document {
     tags: string[] | Tag[];
 }
 
+export const LikeSchema = new Schema({
+    date: Date,
+    likeType: {default: "LIKE", enum: ["LIKE", "UNLIKE"], type: String},
+    user: {ref: "User", type: Schema.Types.ObjectId},
+});
+
+export const TagSchema = new Schema({
+    name: String,
+});
+
 export const TweetSchema = new Schema({
     answers: [{ref: "Tweet", type: Schema.Types.ObjectId}],
     author:  {ref: "User", type: Schema.Types.ObjectId},
     createdDate: {required: true, type: Schema.Types.Date},
-    likes: [{ref: "User", type: Schema.Types.ObjectId}],
+    likes: [{ref: "Like", type: Schema.Types.ObjectId}],
     message: String,
     resenders: [{ref: "User", type: Schema.Types.ObjectId}],
+    tags: [{ref: "Tag", type: Schema.Types.ObjectId}],
 });
 
-export const TweetModel = model<Tweet>("Post", TweetSchema);
+export const TagModel = model<Tag>("Tag", TagSchema);
+export const LikeModel = model<Like>("Like", LikeSchema);
+export const TweetModel = model<Tweet>("Tweet", TweetSchema);
