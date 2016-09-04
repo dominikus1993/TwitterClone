@@ -14,3 +14,5 @@ before_script:
 script:
 - gulp compile
 - gulp test
+after_success:
+    - './node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'

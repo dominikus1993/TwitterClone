@@ -27,6 +27,7 @@
   "devDependencies": {
     "ava": "^0.16.0",
     "browser-sync": "^2.14.0",
+    "coveralls": "^2.11.12",
     "gulp": "^3.9.1",
     "gulp-ava": "^0.14.1",
     "gulp-nodemon": "^2.1.0",
