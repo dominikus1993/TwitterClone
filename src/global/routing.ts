@@ -1,10 +1,10 @@
-import {UserController} from  "../user/controller";
+import {register} from  "../user/controller";
 import {getDefaultUserService} from "./dependencies";
 import {Router} from "express";
 
 export function setRouting() {
     const router = Router();
-    const userController = new UserController(getDefaultUserService());
+    const userService = getDefaultUserService();
 
     router.get("/*", (req, res, next) => {
         res.header("Access-Control-Allow-Origin", "*");
@@ -14,7 +14,7 @@ export function setRouting() {
         next(); // http://expressjs.com/guide.html#passing-route control
     });
 
-    router.post("/user/register", userController.register);
+    router.post("/user/register", register(userService));
 
     return router;
 }
