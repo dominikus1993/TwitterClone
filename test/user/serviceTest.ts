@@ -41,17 +41,15 @@ test("login method when login is wrong", (t) => {
     return t.throws(service.login(user), errorMessages.usernameOrPasswordIsWrong);
 });
 
-test("isLogged when user is logged", (t) => {
+test("isLogged when user is logged", async function(t) {
     const token = {
         createdDate: moment(new Date()).subtract({days: 1}).toDate(),
         expiredDate: moment(new Date()).add({days: 11}).toDate(),
         token: "test",
         user: "123456",
     };
-    return service.isLogged(token as any)
-        .then((fulfilled: Result<User, Error>) => {
-            t.truthy(fulfilled.isSuccess);
-        });
+    const result = await service.isLogged(token as any);
+    t.truthy(result.isSuccess);
 });
 
 test("isLogged when user is not logged", (t) => {
