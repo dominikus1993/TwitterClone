@@ -1,6 +1,4 @@
 import {errorMessages} from "../../src/global/constants";
-import {Result} from "../../src/global/result";
-import {Token, User} from "../../src/user/model";
 import {UserService} from "../../src/user/service";
 import {TokenRepositoryStub, UserRepositoryStub} from "./mocks/repositoryMock";
 import test from "ava";
@@ -8,14 +6,12 @@ import * as moment from "moment";
 
 const service = new UserService(new UserRepositoryStub(), new TokenRepositoryStub());
 
-test("register method", (t) => {
+test("register method", async function(t) {
     const user = {email: "admin", password: "admin", passwordConfirm: "admin", username: "admin"};
-    return service.register(user)
-        .then((fulfilled: Result<User, Error>) => {
-            t.truthy(fulfilled.isSuccess);
-            t.is(fulfilled.value.username, user.username);
-            t.is(fulfilled.value.email, user.email);
-        });
+    const testResult = await service.register(user);
+    t.truthy(testResult.isSuccess);
+    t.is(testResult.value.username, user.username);
+    t.is(testResult.value.email, user.email);
 });
 
 test("register method when passwrod and passwrod confirm is not equal", (t) => {
@@ -23,12 +19,10 @@ test("register method when passwrod and passwrod confirm is not equal", (t) => {
     return t.throws(service.register(user), errorMessages.passwordNotEqual);
 });
 
-test("login method", (t) => {
+test("login method", async function (t) {
     const user = {password: "admin", username: "admin"};
-    return service.login(user)
-        .then((fulfilled: Result<Token, Error>) => {
-            t.truthy(fulfilled.isSuccess);
-        });
+    const testResult = await service.login(user);
+    t.truthy(testResult.isSuccess);
 });
 
 test("login method when password is wrong", (t) => {
