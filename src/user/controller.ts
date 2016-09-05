@@ -6,7 +6,11 @@ export class UserController {
 
     }
 
-    public login(req: Request, res: Response, next: Function) {
+    public async login(req: Request, res: Response, next: Function) {
+        next();
+    }
+
+    public async register(req: Request, res: Response, next: Function) {
         next();
     }
 }
