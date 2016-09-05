@@ -1,3 +1,12 @@
-/**
- * Created by domin on 04.09.2016.
- */
+import {IUserService} from "./service";
+import {Request, Response} from "express";
+
+export class UserController {
+    constructor(private userService: IUserService) {
+
+    }
+
+    public login(req: Request, res: Response, next: Function) {
+        next();
+    }
+}
