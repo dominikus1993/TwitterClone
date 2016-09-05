@@ -16,100 +16,82 @@ test.before("set mongodb", () => {
     });
 });
 
-test("register user", (t) => {
-    return userRepository.register({
+test("register user", async function (t) {
+    const testResult = await userRepository.register({
         email: "admin@admin.admin",
         password: "admin",
         username: "admin",
-    }).then((fulfilled) => {
-        t.not(fulfilled, null);
-        t.is(fulfilled.email, "admin@admin.admin");
-        t.is(fulfilled.username, "admin");
-        t.is(fulfilled.role, "User");
-        t.pass();
-    }, (rejected?: any) => {
-        t.fail(rejected);
     });
+    t.not(testResult, null);
+    t.is(testResult.email, "admin@admin.admin");
+    t.is(testResult.username, "admin");
+    t.is(testResult.role, "User");
+    t.pass();
 });
 
-test("login user with correct username and password", (t) => {
+test("login user with correct username and password", async function (t) {
     const user = {
         email: "admin@admin.admin",
         password: "admin",
         username: "admin",
     };
-    return Promise.resolve(userRepository.register(user)).then(() => {
+    const testResult = await Promise.resolve(userRepository.register(user)).then(() => {
         return Promise.resolve(userRepository.login({password: user.password, username: user.username}));
-    }).then((fulfilled) => {
-        t.not(fulfilled, null);
-        t.is(fulfilled.email, "admin@admin.admin");
-        t.is(fulfilled.username, "admin");
-        t.pass();
-    }, (rejected?: any) => {
-        t.fail(rejected);
     });
+    t.not(testResult, null);
+    t.is(testResult.email, "admin@admin.admin");
+    t.is(testResult.username, "admin");
+    t.pass();
 });
 
-test("login user with incorrect username and password", (t) => {
+test("login user with incorrect username and password", async function (t) {
     const user = {
         email: "admin1@admin1.admin1",
         password: "admin1",
         username: "admin1",
     };
-    return Promise.resolve(userRepository.register(user)).then(() => {
+    const testResult = await Promise.resolve(userRepository.register(user)).then(() => {
         return Promise.resolve(userRepository.login({password: user.password + "aa", username: user.username}));
-    }).then((fulfilled) => {
-        t.is(fulfilled, null);
-        t.pass();
-    }, (rejected?: any) => {
-        t.fail(rejected);
     });
+    t.is(testResult, null);
+    t.pass();
 });
 
-test("get user by email", (t) => {
+test("get user by email", async function (t){
     const user = {
         email: "test@test@test",
         password: "test",
         username: "test",
     };
-    return Promise.resolve(userRepository.register(user)).then((fulfilled) => {
+    const testResult = await Promise.resolve(userRepository.register(user)).then((fulfilled) => {
         return Promise.resolve(userRepository.findBy({email: fulfilled.email}));
-    }).then((fulfilled) => {
-        t.not(fulfilled, null);
-        t.is(fulfilled.email, user.email);
-        t.is(fulfilled.username, user.username);
-        t.pass();
-    }, (rejected?: any) => {
-        t.fail(rejected);
     });
+    t.not(testResult, null);
+    t.is(testResult.email, user.email);
+    t.is(testResult.username, user.username);
+    t.pass();
 });
 
-test("save token", (t) => {
+test("save token", async function (t) {
     const testUser = {email: "admin222@admin.admin", password: "admin", username: "admin22"};
-    return userRepository.register(testUser).then((fulfilled: any) => {
+    const testResult = await userRepository.register(testUser).then((fulfilled: any) => {
         return Promise.resolve(tokenRepository.save(fulfilled));
-    }).then((fulfilled: Token) => {
-        t.not(fulfilled, null);
-        t.not(fulfilled.token, null);
-        t.pass();
-    }).catch((error?: any) => {
-        t.fail(error);
     });
+    t.not(testResult, null);
+    t.not(testResult.token, null);
+    t.pass();
 });
 
-test("get saved token", (t) => {
+test("get saved token", async function (t) {
     const testUser = {email: "admin222@admin.admin", password: "admin", username: "admin22"};
-    return userRepository.register(testUser).then((fulfilled: any) => {
+    const testResult = await userRepository.register(testUser).then((fulfilled: any) => {
         return Promise.resolve(tokenRepository.save(fulfilled));
     }).then((fulfilled: Token) => {
         return Promise.resolve(tokenRepository.findBy({token: fulfilled.token}));
-    }).then((fulfilled: Token) => {
-        t.not(fulfilled, null);
-        t.not(fulfilled.token, null);
-        t.pass();
-    }).catch((error?: any) => {
-        t.fail(error);
     });
+    t.not(testResult, null);
+    t.not(testResult.token, null);
+    t.pass();
 });
 
 test.after("clear database", () => {
