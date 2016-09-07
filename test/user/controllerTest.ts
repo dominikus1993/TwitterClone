@@ -42,7 +42,6 @@ test("register:Error", async(t) => {
     t.falsy(res.body.isSuccess);
 });
 
-
 test("login:Success", async(t) => {
     const registerResult = await request(app)
         .post("/test/api/user/register")
