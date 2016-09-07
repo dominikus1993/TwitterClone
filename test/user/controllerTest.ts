@@ -25,4 +25,14 @@ test("register:Success", async(t) => {
         .send({email: "dominikus@test.test", password: "admin", passwordConfirm: "admin", username: "dominikus1993"});
 
     t.is(res.status, 200);
+    t.truthy(res.body.isSuccess);
+});
+
+test("register:Error", async(t) => {
+    const res = await request(app)
+        .post("/test/api/user/register")
+        .send({email: "dominikus@test.test2", password: "admin", passwordConfirm: "admin2", username: "dominikus19932"});
+
+    t.is(res.status, 404);
+    t.falsy(res.body.isSuccess);
 });
