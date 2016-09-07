@@ -4,3 +4,8 @@ export const errorMessages = {
     userIsNotLogged: "User is not logged",
     usernameOrPasswordIsWrong: "Password or username is wrong",
 };
+
+export const httpStatuses = {
+    NOT_FOUND: 404,
+    OK: 200,
+};

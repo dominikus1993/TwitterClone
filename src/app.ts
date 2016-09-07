@@ -1,6 +1,6 @@
 import {databaseConfig, errorConfig} from "./global/config";
 import {wrapResult} from "./global/result";
-import {routing} from "./global/routing";
+import router from "./global/routing";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import {Request, Response} from "express";
@@ -14,7 +14,8 @@ Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 
 const app = express();
 
-app.use("/api", routing);
+// noinspection TypeScriptValidateTypes
+app.use("/api", router);
 // noinspection TypeScriptValidateTypes
 app.use(logger("dev"));
 // noinspection TypeScriptValidateTypes
