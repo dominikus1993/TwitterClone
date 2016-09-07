@@ -1,4 +1,4 @@
-import {register} from  "../user/controller";
+import {login, register} from  "../user/controller";
 import {getDefaultUserService} from "./dependencies";
 import {Router} from "express";
 
@@ -15,5 +15,5 @@ router.get("/*", (req, res, next) => {
 });
 
 router.post("/user/register", register(userService));
-
+router.post("/user/login", login(userService));
 export default router;

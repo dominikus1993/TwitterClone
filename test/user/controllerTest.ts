@@ -31,7 +31,37 @@ test("register:Success", async(t) => {
 test("register:Error", async(t) => {
     const res = await request(app)
         .post("/test/api/user/register")
-        .send({email: "dominikus@test.test2", password: "admin", passwordConfirm: "admin2", username: "dominikus19932"});
+        .send({
+            email: "dominikus@test.test2",
+            password: "admin",
+            passwordConfirm: "admin2",
+            username: "dominikus19932",
+        });
+
+    t.is(res.status, 404);
+    t.falsy(res.body.isSuccess);
+});
+
+
+test("login:Success", async(t) => {
+    const registerResult = await request(app)
+        .post("/test/api/user/register")
+        .send({email: "loginTest@Test.test", password: "admin", passwordConfirm: "admin", username: "loginTest"});
+
+    t.is(registerResult.status, 200);
+    t.truthy(registerResult.body.isSuccess);
+
+    const loginResult = await request(app)
+        .post("/test/api/user/login")
+        .send({password: "admin", username: "loginTest"});
+    t.is(loginResult.status, 200);
+    t.truthy(loginResult.body.isSuccess);
+});
+
+test("login:Error", async(t) => {
+    const res = await request(app)
+        .post("/test/api/user/login")
+        .send({password: "adsdsdsdsdsdsdsdsdsdsdsdsdsds", username: "adsssssssssssss"});
 
     t.is(res.status, 404);
     t.falsy(res.body.isSuccess);
