@@ -40,6 +40,8 @@
     "karma": "1.2.0",
     "nodemon": "1.10.0",
     "nyc": "^8.1.0",
+    "supertest": "^2.0.0",
+    "supertest-as-promised": "^4.0.0",
     "tern-node-express": "^0.4.0",
     "tslint": "^3.14.0"
   }

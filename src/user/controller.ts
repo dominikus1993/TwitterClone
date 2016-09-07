@@ -5,13 +5,13 @@ import {Request, Response} from "express";
 
 export function register(userService: IUserService) {
     return async function(req: Request, res: Response, next: Function) {
-        console.log(req, res);
+        console.log(req.headers);
         const userObj: {username: string, email: string, password: string, passwordConfirm: string} = req.body;
         try {
             const user = await userService.register(userObj);
             res.status(httpStatuses.OK).json(user).end();
         } catch (error) {
-            res.status(httpStatuses.NOT_FOUND).json(wrapResult(error)).end();
+            res.status(httpStatuses.NOT_FOUND).json(wrapResult(null, error)).end();
         }
     };
 }

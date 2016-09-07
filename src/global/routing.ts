@@ -13,8 +13,6 @@ router.get("/*", (req, res, next) => {
     next(); // http://expressjs.com/guide.html#passing-route control
 });
 
-const registerReq = register(userService);
-
-router.post("/user/register", registerReq);
+router.post("/user/register", register(userService));
 
 export default router;
