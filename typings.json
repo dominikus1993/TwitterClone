@@ -21,6 +21,7 @@
         "ramda": "registry:global/ramda#0.21.0+20160531162943",
         "serve-favicon": "registry:dt/serve-favicon#0.0.0+20160316155526",
         "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
+        "superagent": "registry:dt/superagent#2.0.0+20160811085415",
         "supertest": "registry:dt/supertest#1.1.0+20160724070541",
         "supertest-as-promised": "registry:dt/supertest-as-promised#2.0.2+20160802164024"
     }

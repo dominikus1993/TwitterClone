@@ -15,8 +15,6 @@ Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 const app = express();
 
 // noinspection TypeScriptValidateTypes
-app.use("/api", router);
-// noinspection TypeScriptValidateTypes
 app.use(logger("dev"));
 // noinspection TypeScriptValidateTypes
 app.use(bodyParser.json());
@@ -24,6 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // noinspection TypeScriptValidateTypes
 app.use(cookieParser());
+// noinspection TypeScriptValidateTypes
+app.use("/api", router);
 // noinspection TypeScriptValidateTypes
 app.use((req: Request, res: Response, next: Function) => {
     let err: any = new Error("Not Found");

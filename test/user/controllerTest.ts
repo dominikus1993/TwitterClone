@@ -1,23 +1,28 @@
-import {databaseConfig} from "../../src/global/config";
-import {register} from "../../src/user/controller";
-import {getDefaultUserService} from "../../src/global/dependencies";
+import {databaseConfig, errorConfig} from "../../src/global/config";
+import router from "../../src/global/routing";
 import test from "ava";
 import * as express from "express";
 import * as mongoose from "mongoose";
+import * as request from "supertest-as-promised";
+import bodyParser = require("body-parser");
 
 const app = express();
 
 test.before("set mongodb", () => {
     mongoose.Promise = databaseConfig.promise;
-    return mongoose.connect("mongodb://localhost/twitter-test").then(() => {
+    return mongoose.connect("mongodb://localhost/twitter-test-controller").then(() => {
         mongoose.connection.db.dropDatabase();
-        const service = getDefaultUserService();
-        app.post("/register", register(service));
+        Object.defineProperty(Error.prototype, "toJSON", errorConfig);
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({extended: true}));
+        app.use("/test/api", router);
     });
 });
 
-test("register:Success", async t => {
-    t.plan(2);
+test("register:Success", async(t) => {
+    const res = await request(app)
+        .post("/test/api/user/register")
+        .send({email: "dominikus@test.test", password: "admin", passwordConfirm: "admin", username: "dominikus1993"});
 
-    const res = awa
+    t.is(res.status, 200);
 });

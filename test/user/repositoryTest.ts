@@ -9,7 +9,7 @@ let tokenRepository: ITokenRepository;
 
 test.before("set mongodb", () => {
     mongoose.Promise = databaseConfig.promise;
-    return mongoose.connect("mongodb://localhost/twitter-test").then(() => {
+    return mongoose.connect("mongodb://localhost/twitter-test-repository").then(() => {
         mongoose.connection.db.dropDatabase();
         userRepository = new UserRepository(UserModel);
         tokenRepository = new TokenRepository(TokenModel);
