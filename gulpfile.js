@@ -59,7 +59,7 @@ gulp.task("nodemon", ['compile'], () => {
     let started = false;
 
     nodemon({
-        script: './src/app.js',
+        script: 'src/bin/www',
         tasks: ["compile"],
         watch: tsFiles,
         ext: "ts"
