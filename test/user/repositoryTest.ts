@@ -57,6 +57,24 @@ test("login user with incorrect username and password", async function (t) {
     t.pass();
 });
 
+test("delete user by username", async function (t) {
+    const user = {
+        email: "admin22@admin22.admin222",
+        password: "admin12222222222",
+        username: "admin122222",
+    };
+    const testResult = await Promise.resolve(userRepository.register(user));
+    const deleteUserResult = await Promise.resolve(userRepository.deleteBy({username: testResult.username}));
+    t.truthy(deleteUserResult);
+    t.pass();
+});
+
+test("delete not existing user by username", async function (t) {
+    const deleteUserResult = await Promise.resolve(userRepository.deleteBy({username: "notExistingUser"}));
+    t.truthy(deleteUserResult);
+    t.pass();
+});
+
 test("get user by email", async function (t){
     const user = {
         email: "test@test@test",

@@ -11,6 +11,7 @@ export interface IUserRepository {
     register(data: { email: string, username: string, password: string }): Promise<User>;
     login(data: { username: string, password: string }): Promise<User>;
     findBy(by: Object): Promise<User>;
+    deleteBy(by: Object): Promise<boolean>;
 }
 
 export interface ITokenRepository {
@@ -41,6 +42,18 @@ export class UserRepository implements IUserRepository {
 
     public findBy(by: Object): Promise<User> {
         return this.userModel.findOne(by).exec() as any as Promise<User>;
+    }
+
+    public deleteBy(by: Object): Promise<boolean> {
+        return new Promise((resolve: (res: boolean) => void, rejected: (err?: any) => void) => {
+            this.userModel.remove(by, (err) => {
+                if (!err) {
+                    resolve(true);
+                } else {
+                    rejected(err);
+                }
+            });
+        });
     }
 }
 
