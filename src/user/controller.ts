@@ -26,3 +26,20 @@ export function login(userService: IUserService) {
         }
     };
 }
+
+export function isLogged(userService: IUserService) {
+    return async (req: Request, res: Response, next: Function) => {
+        const authorization = req.headers["authorization"] || "";
+        try {
+            const isLoggedResult = await userService.isLogged({token: authorization} as any);
+            if (isLoggedResult.isSuccess) {
+                (req as any).user = isLoggedResult.value;
+                next();
+            } else {
+                res.status(httpStatuses.NOT_FOUND).json(isLoggedResult);
+            }
+        } catch (error) {
+            res.status(httpStatuses.NOT_FOUND).json(error);
+        }
+    };
+}

@@ -1,4 +1,4 @@
-import {login, register} from  "../user/controller";
+import {isLogged, login, register} from  "../user/controller";
 import {getDefaultUserService} from "./dependencies";
 import {Router} from "express";
 
@@ -16,4 +16,5 @@ router.get("/*", (req, res, next) => {
 
 router.post("/user/register", register(userService));
 router.post("/user/login", login(userService));
+router.post("/user/isLogged", isLogged(userService));
 export default router;
