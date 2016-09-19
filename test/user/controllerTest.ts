@@ -82,6 +82,16 @@ test("login:Error", async(t) => {
     t.falsy(res.body.isSuccess);
 });
 
+test("isLogged:Error", async(t) => {
+    const res = await request(app)
+        .post("/test/api/user/isLogged")
+        .set("authorization", "nope");
+
+    t.is(res.status, 401);
+    t.falsy(res.body.isSuccess);
+});
+
+
 test.after("close connection to database", () => {
     mongoose.connection.close();
 });

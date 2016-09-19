@@ -8,4 +8,5 @@ export const errorMessages = {
 export const httpStatuses = {
     NOT_FOUND: 404,
     OK: 200,
+    UNAUTHORIZED: 401,
 };

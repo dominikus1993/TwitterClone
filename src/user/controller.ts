@@ -36,10 +36,10 @@ export function isLogged(userService: IUserService) {
                 (req as any).user = isLoggedResult.value;
                 next();
             } else {
-                res.status(httpStatuses.NOT_FOUND).json(isLoggedResult);
+                res.status(httpStatuses.UNAUTHORIZED).json(isLoggedResult);
             }
         } catch (error) {
-            res.status(httpStatuses.NOT_FOUND).json(error);
+            res.status(httpStatuses.UNAUTHORIZED).json(error);
         }
     };
 }
