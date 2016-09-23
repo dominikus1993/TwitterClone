@@ -91,7 +91,7 @@ test("get user by email", async function (t){
 });
 
 test("save token", async function (t) {
-    const testUser = {email: "admin222@admin.admin", password: "admin", username: "admin22"};
+    const testUser = {email: "admin2222@admin.admin", password: "admin", username: "admin22"};
     const testResult = await userRepository.register(testUser).then((fulfilled: any) => {
         return Promise.resolve(tokenRepository.save(fulfilled));
     });
