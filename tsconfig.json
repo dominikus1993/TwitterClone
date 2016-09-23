@@ -5,6 +5,7 @@
         "noEmitOnError": true,
         "module": "commonjs",
         "target": "ES6",
-        "allowJs": true
+        "strictNullChecks": true,
+        "noImplicitAny": true
     }
 }

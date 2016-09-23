@@ -20,9 +20,8 @@ export interface ITokenRepository {
 }
 
 export class UserRepository implements IUserRepository {
-    public readonly a = 2;
-    constructor(private userModel: Model<User>) {
 
+    constructor(private userModel: Model<User>) {
     }
 
     public register(data: { email: string, username: string, password: string }): Promise<User> {
