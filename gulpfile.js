@@ -27,7 +27,7 @@ function lint() {
 function build() {
     return gulp.src(tsFiles)
         .pipe(sourcemap.init())
-        .pipe(typescript(tsProject))
+        .pipe(tsProject())
         .pipe(sourcemap.write())
         .pipe(gulp.dest(function (file) { return file.base; }))
         .pipe(notify({

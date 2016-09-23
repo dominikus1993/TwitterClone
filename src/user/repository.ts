@@ -20,7 +20,7 @@ export interface ITokenRepository {
 }
 
 export class UserRepository implements IUserRepository {
-
+    public readonly a = 2;
     constructor(private userModel: Model<User>) {
 
     }
