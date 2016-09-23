@@ -8,7 +8,7 @@ let userRepository: IUserRepository;
 let tokenRepository: ITokenRepository;
 
 test.before("set mongodb", () => {
-    mongoose.Promise = databaseConfig.promise;
+    (mongoose as any).Promise = databaseConfig.promise;
     return mongoose.connect("mongodb://localhost/twitter-test-repository").then(() => {
         mongoose.connection.db.dropDatabase();
         userRepository = new UserRepository(UserModel);
@@ -23,9 +23,9 @@ test("register user", async function (t) {
         username: "admin",
     });
     t.not(testResult, null);
-    t.is(testResult.email, "admin@admin.admin");
-    t.is(testResult.username, "admin");
-    t.is(testResult.role, "User");
+    t.is(testResult!.email, "admin@admin.admin");
+    t.is(testResult!.username, "admin");
+    t.is(testResult!.role, "User");
     t.pass();
 });
 
@@ -39,8 +39,8 @@ test("login user with correct username and password", async function (t) {
         return Promise.resolve(userRepository.login({password: user.password, username: user.username}));
     });
     t.not(testResult, null);
-    t.is(testResult.email, "admin@admin.admin");
-    t.is(testResult.username, "admin");
+    t.is(testResult!.email, "admin@admin.admin");
+    t.is(testResult!.username, "admin");
     t.pass();
 });
 
@@ -64,7 +64,7 @@ test("delete user by username", async function (t) {
         username: "admin122222",
     };
     const testResult = await Promise.resolve(userRepository.register(user));
-    const deleteUserResult = await Promise.resolve(userRepository.deleteBy({username: testResult.username}));
+    const deleteUserResult = await Promise.resolve(userRepository.deleteBy({username: testResult!.username}));
     t.truthy(deleteUserResult);
     t.pass();
 });
@@ -82,11 +82,11 @@ test("get user by email", async function (t){
         username: "test",
     };
     const testResult = await Promise.resolve(userRepository.register(user)).then((fulfilled) => {
-        return Promise.resolve(userRepository.findBy({email: fulfilled.email}));
+        return Promise.resolve(userRepository.findBy({email: fulfilled!.email}));
     });
     t.not(testResult, null);
-    t.is(testResult.email, user.email);
-    t.is(testResult.username, user.username);
+    t.is(testResult!.email, user.email);
+    t.is(testResult!.username, user.username);
     t.pass();
 });
 
@@ -96,7 +96,7 @@ test("save token", async function (t) {
         return Promise.resolve(tokenRepository.save(fulfilled));
     });
     t.not(testResult, null);
-    t.not(testResult.token, null);
+    t.not(testResult!.token, null);
     t.pass();
 });
 
@@ -108,7 +108,7 @@ test("get saved token", async function (t) {
         return Promise.resolve(tokenRepository.findBy({token: fulfilled.token}));
     });
     t.not(testResult, null);
-    t.not(testResult.token, null);
+    t.not(testResult!.token, null);
     t.pass();
 });
 

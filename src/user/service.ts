@@ -60,7 +60,7 @@ export class UserService implements IUserService {
             }
 
             if (token.expiredDate.getTime() > new Date().getTime()) {
-                return Promise.resolve(this.userRepository.findBy({_id: fulfilled.user}));
+                return Promise.resolve(this.userRepository.findBy({_id: fulfilled!.user}));
             }
 
             return Promise.reject(new Error(errorMessages.tokenExpired));

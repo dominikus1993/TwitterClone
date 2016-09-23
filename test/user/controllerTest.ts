@@ -9,7 +9,7 @@ import bodyParser = require("body-parser");
 const app = express();
 
 test.before("set mongodb", () => {
-    mongoose.Promise = databaseConfig.promise;
+    (mongoose as any).Promise = databaseConfig.promise;
     return mongoose.connect("mongodb://localhost/twitter-test-controller").then(() => {
         mongoose.connection.db.dropDatabase();
         Object.defineProperty(Error.prototype, "toJSON", errorConfig);

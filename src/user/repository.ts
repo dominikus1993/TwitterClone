@@ -8,15 +8,15 @@ import {Model} from "mongoose";
 const encode = curr(encrypt)(appConfig.secret);
 
 export interface IUserRepository {
-    register(data: { email: string, username: string, password: string }): Promise<User>;
-    login(data: { username: string, password: string }): Promise<User>;
-    findBy(by: Object): Promise<User>;
+    register(data: { email: string, username: string, password: string }): Promise<User | null>;
+    login(data: { username: string, password: string }): Promise<User | null>;
+    findBy(by: Object): Promise<User | null>;
     deleteBy(by: Object): Promise<boolean>;
 }
 
 export interface ITokenRepository {
-    save(user: User): Promise<Token> ;
-    findBy(by: Object): Promise<Token>;
+    save(user: User): Promise<Token | null> ;
+    findBy(by: Object): Promise<Token | null>;
 }
 
 export class UserRepository implements IUserRepository {
@@ -24,23 +24,23 @@ export class UserRepository implements IUserRepository {
     constructor(private userModel: Model<User>) {
     }
 
-    public register(data: { email: string, username: string, password: string }): Promise<User> {
+    public register(data: { email: string, username: string, password: string }): Promise<User | null> {
         return new this.userModel({
             createdDate: new Date(),
             email: data.email,
             password: encode(data.password),
             username: data.username,
-        }).save() as {} as Promise<User>;
+        }).save() as {} as Promise<User | null>;
     }
 
-    public login(data: { username: string, password: string }): Promise<User> {
+    public login(data: { username: string, password: string }): Promise<User | null> {
         return this.userModel
             .findOne({ password: encode(data.password), username: data.username })
-            .exec() as any as Promise<User>;
+            .exec() as any as Promise<User | null>;
     }
 
-    public findBy(by: Object): Promise<User> {
-        return this.userModel.findOne(by).exec() as any as Promise<User>;
+    public findBy(by: Object): Promise<User | null> {
+        return this.userModel.findOne(by).exec() as any as Promise<User | null>;
     }
 
     public deleteBy(by: Object): Promise<boolean> {
@@ -62,7 +62,7 @@ export class TokenRepository implements ITokenRepository {
 
     }
 
-    public save(user: User): Promise<Token> {
+    public save(user: User): Promise<Token | null> {
         return new this.model({
             createdDate: new Date(),
             expiredDate: moment(new Date()).add({
@@ -70,10 +70,10 @@ export class TokenRepository implements ITokenRepository {
             }).toDate(),
             token: generateToken(),
             user,
-        }) as any as Promise<Token>;
+        }) as any as Promise<Token | null>;
     }
 
-    public findBy(by: Object): Promise<Token> {
-        return this.model.find(by).exec() as any as Promise<Token>;
+    public findBy(by: Object): Promise<Token | null> {
+        return this.model.find(by).exec() as any as Promise<Token | null>;
     }
 }

@@ -8,7 +8,7 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as logger from "morgan";
 
-mongoose.Promise = databaseConfig.promise;
+(mongoose as any).Promise = databaseConfig.promise;
 mongoose.connect(databaseConfig.url);
 Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 
