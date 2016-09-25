@@ -12,8 +12,8 @@ export const appConfig = {
 export const errorConfig = {
     configurable: true,
     value() {
-        let alt = {};
-        let storeKey = (key) => {
+        const alt: any = {};
+        const storeKey = (key: any) => {
             alt[key] = this[key];
         };
         Object.getOwnPropertyNames(this).forEach(storeKey, this);

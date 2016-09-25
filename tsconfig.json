@@ -4,6 +4,8 @@
         "declaration": false,
         "noEmitOnError": true,
         "module": "commonjs",
-        "target": "ES6"
+        "target": "ES6",
+        "strictNullChecks": true,
+        "noImplicitAny": true
     }
 }

@@ -1,0 +1,35 @@
+{
+  "sessions": [
+    {
+      "id": "939be0fe-9581-4389-ad0e-62ab191fcbac",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [
+          {
+            "id": "9fba2a47-1a76-46d5-b6f3-c52f4f1cfcbc",
+            "relativeUrl": "file://./test/global/resultTest.ts",
+            "additionalData": null
+          },
+          {
+            "id": "8edea3f5-e319-43d7-bc5d-c041e008bf3e",
+            "relativeUrl": "file://./src/app.ts",
+            "additionalData": null
+          },
+          {
+            "id": "d845305e-1996-4155-857e-14887ee74cbe",
+            "relativeUrl": "file://./src/user/repository.ts",
+            "additionalData": null
+          }
+        ],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1472798709774,
+      "selectedTabId": "d845305e-1996-4155-857e-14887ee74cbe",
+      "errorsExpanded": true
+    }
+  ],
+  "relativePathToTsconfig": "./tsconfig.json"
+}

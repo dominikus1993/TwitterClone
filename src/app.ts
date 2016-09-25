@@ -1,5 +1,6 @@
 import {databaseConfig, errorConfig} from "./global/config";
 import {wrapResult} from "./global/result";
+import router from "./global/routing";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import {Request, Response} from "express";
@@ -7,7 +8,7 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as logger from "morgan";
 
-mongoose.Promise = databaseConfig.promise;
+(mongoose as any).Promise = databaseConfig.promise;
 mongoose.connect(databaseConfig.url);
 Object.defineProperty(Error.prototype, "toJSON", errorConfig);
 
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // noinspection TypeScriptValidateTypes
 app.use(cookieParser());
+// noinspection TypeScriptValidateTypes
+app.use("/api", router);
 // noinspection TypeScriptValidateTypes
 app.use((req: Request, res: Response, next: Function) => {
     let err: any = new Error("Not Found");
@@ -41,4 +44,4 @@ app.use((err: any, req: Request, res: Response, next: Function) => {
     res.json(wrapResult(null, err));
 });
 
-export default app;
+module.exports = app;

@@ -5,7 +5,7 @@ const typescript = require('gulp-typescript');
 const notify = require('gulp-notify');
 const nodemon = require('gulp-nodemon');
 const browserSync = require('browser-sync');
-const mocha = require("gulp-mocha");
+const ava = require("gulp-ava");
 const sourcemap = require("gulp-sourcemaps");
 const tslint = require("gulp-tslint");
 
@@ -13,7 +13,7 @@ const tsFiles = ["src/**/*.ts", "test/**/*.ts", "typings/**/**.ts"];
 const jsFiles = ["src/**/*.js", "!node_modules/**/*.js", "test/**/*.js"];
 const filesToLint = ["src/**/*.ts", "test/**/*.ts"];
 
-var tsProject = typescript.createProject("tsconfig.json");
+const tsProject = typescript.createProject("tsconfig.json");
 
 
 function lint() {
@@ -27,7 +27,7 @@ function lint() {
 function build() {
     return gulp.src(tsFiles)
         .pipe(sourcemap.init())
-        .pipe(typescript(tsProject))
+        .pipe(tsProject())
         .pipe(sourcemap.write())
         .pipe(gulp.dest(function (file) { return file.base; }))
         .pipe(notify({
@@ -47,10 +47,8 @@ gulp.task("lint", () => {
 });
 
 gulp.task("test", ["compile", "lint"], () => {
-    return gulp.src("test/**/*.js")
-        .pipe(mocha({
-            reporter: "nyan"
-        }));
+    return gulp.src(["test/**/*.js", "!test/**/mocks/*.js"])
+        .pipe(ava({verbose: true, nyc: true}));
 });
 
 gulp.task("watch", () => {
@@ -58,10 +56,10 @@ gulp.task("watch", () => {
 });
 
 gulp.task("nodemon", ['compile'], () => {
-    var started = false;
+    let started = false;
 
     nodemon({
-        script: './src/app.js',
+        script: 'src/bin/www',
         tasks: ["compile"],
         watch: tsFiles,
         ext: "ts"
